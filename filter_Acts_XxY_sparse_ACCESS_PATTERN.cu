@@ -230,17 +230,17 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
 
 int main()
 {
-    float* img_data_host = readMatrix_img("img.data");
+    float* img_data_host = readMatrix_img("data/img.data"); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
     Matrix mat_img(img_data_host, 9216, 128);
     NVMatrix images(mat_img, true);
     free(img_data_host);
 
-    float* filter_data_host = readMatrix_filter("zero_filter.data");
+    float* filter_data_host = readMatrix_filter("data/zero_filter.data");
     Matrix mat_filter(filter_data_host, 1600, 64); 
     NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
     free(filter_data_host);
 
-    float* target_data_host = readMatrix_img("targetInit.data"); 
+    float* target_data_host = readMatrix_img("data/targetInit.data"); 
     Matrix mat_target(target_data_host, 9216, 128); 
     NVMatrix targets(mat_target, true); 
     
@@ -349,7 +349,7 @@ float * readMatrix_filter(char * filename){
     */
 
     if((fp = fopen(filename, "r+")) == NULL) {
-        printf("No such file\n");
+        printf("No such file1\n");
         exit(1);
     }
 
@@ -418,7 +418,7 @@ float * readMatrix_img(char * filename){
     */
 
     if((fp = fopen(filename, "r+")) == NULL) {
-        printf("No such file\n");
+        printf("No such file2\n");
         exit(1);
     }
 
