@@ -59,9 +59,9 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
     const int imgPixels = imgSizeY * imgSizeX;
     const int filterPixels = filterSize * filterSize;
     const int numFilterColors = numImgColors / numGroups; //64 (64/1) //?
-    const int blocksPerModule = numFilters / (B_Y*filtersPerThread);
+    const int blocksPerModule = numFilters / (B_Y*filtersPerThread); // 64 / (8*4) = 4
     const int moduleIdx = blockIdx.y / blocksPerModule;
-    const int blockFilterIdx = filtersPerThread * B_Y * (blockIdx.y % blocksPerModule);
+    const int blockFilterIdx = filtersPerThread * B_Y * (blockIdx.y % blocksPerModule); // 4 * 4 * ([0-71] %4) ==> 16 * [0-2] ==> 0. 32
     const int numFiltersPerGroup = numFilters / numGroups; //64
     const int blockGroupIdx = blockFilterIdx / numFiltersPerGroup; //0
 
@@ -121,9 +121,8 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                             shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx]; 
                             //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels /*25*/ + p + p2) * numFilters /*64*/]; 
                             
-                            
                             if(filters[last_idx] == 0.0)
-                                filters[last_idx] = blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y;
+                                filters[last_idx] = (float)moduleIdx + (oc+c)*100;
 
                             // (threadIdx.x)(threadIdx.y).(blockIdx.x)(blockIdx.y)
                             shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = 0; 
