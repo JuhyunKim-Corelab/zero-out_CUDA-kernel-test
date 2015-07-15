@@ -121,26 +121,13 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                             shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx]; 
                             //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels /*25*/ + p + p2) * numFilters /*64*/]; 
                             
-                            /*
+                            
                             if(filters[last_idx] == 0.0)
-                                filters[last_idx] = blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y + 0.001;
-                            //else if(filters[last_idx] < 0.0)
-
-                            else{
-                                if((((int)filters[last_idx])%10 == threadIdx.y)
-                                    && ( (((int)filters[last_idx])/10)%100 == threadIdx.x))
-                                    filters[last_idx] = filters[last_idx] + 0.001;
-                                    //filters[last_idx] = blockIdx.y*1000 + ( ((int)filters[last_idx])%1000);   
-                                else{
-                                    filters[last_idx] = filters[last_idx] + 0.001;
-                                    float fr = filters[last_idx] - (float)((int)filters[last_idx]);
-                                    filters[last_idx] = (-1.0)*(blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y + fr);
-                                }
-                            }
+                                filters[last_idx] = blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y;
 
                             // (threadIdx.x)(threadIdx.y).(blockIdx.x)(blockIdx.y)
                             shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = 0; 
-                            */
+                            
                             
                         }
                     } else {
@@ -249,7 +236,7 @@ int main()
     NVMatrix images(mat_img, true);
     free(img_data_host);
 
-    float* filter_data_host = readMatrix_filter("data/local/zero-out_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
+    float* filter_data_host = readMatrix_filter("data/local/zero_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
     Matrix mat_filter(filter_data_host, nRowOfFilter, numFilters); 
     NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
     free(filter_data_host);
@@ -318,8 +305,8 @@ int main()
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
 
-    targets.print(targets.getNumRows(), targets.getNumRows());
-    //filters.print(filters.getNumRows(), filters.getNumRows());
+    //targets.print(targets.getNumRows(), targets.getNumRows());
+    filters.print(filters.getNumRows(), filters.getNumRows());
 
     printf("\nfinish\n");
 
