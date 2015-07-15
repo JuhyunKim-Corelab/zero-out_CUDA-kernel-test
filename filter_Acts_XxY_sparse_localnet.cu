@@ -8,8 +8,8 @@
 #define IMG_SIZE 9216
 #define FILTER_SIZE 1600
 
-float * readMatrix_filter(char * filename);
-float * readMatrix_img(char * filename);
+float * readMatrix_filter(char * filename, int nRows, int nCols);
+float * readMatrix_img(char * filename, int nRows, int nCols);
 float * genMatrix_img(int m, int n, float val);
 void print_result(float* result, int mR, int nR, int real_mR, int real_nR, int isRowMajor);
 
@@ -42,14 +42,15 @@ void print_result(float* result, int mR, int nR, int real_mR, int real_nR, int i
  * The imgSize here is the size of the actual image without the padding.
  *
  */
-template <int B_Y, int B_X, int imgsPerThread, int filtersPerThread, int colorCache,
-          bool scale, bool checkImgBounds>
+template <int B_Y, int B_X, int imgsPerThread, int filtersPerThread, int colorCache, //4,32,4,8,2
+          bool scale, bool checkImgBounds> //false , false
 __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targets,
-                                       const int numImages, const int numFilters,
+                                       const int numImages, const int numFilters, //128, 64
                                        const int imgSizeY, const int imgSizeX, const int filterSize, const int paddingStart,
-                                       const int moduleStride,
-                                       const int numModulesY, const int numModulesX, const int imgStride, const int numImgColors,
-                                       const int numGroups, 
+                                       const int moduleStride, //1
+                                       const int numModulesY, const int numModulesX, //12, 12
+                                       const int imgStride, const int numImgColors, //128, 64
+                                       const int numGroups,  //1
                                        const float scaleTargets, const float scaleOutputs,
                                        const bool conv) 
 {
@@ -57,32 +58,38 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
     __shared__ float shImages[B_Y*colorCache][B_X * imgsPerThread]; // pre-load B_Y pixels from B_X*imgsPerThread images
     const int imgPixels = imgSizeY * imgSizeX;
     const int filterPixels = filterSize * filterSize;
-    const int numFilterColors = numImgColors / numGroups;
+    const int numFilterColors = numImgColors / numGroups; //64 (64/1) //?
     const int blocksPerModule = numFilters / (B_Y*filtersPerThread);
     const int moduleIdx = blockIdx.y / blocksPerModule;
     const int blockFilterIdx = filtersPerThread * B_Y * (blockIdx.y % blocksPerModule);
-    const int numFiltersPerGroup = numFilters / numGroups;
-    const int blockGroupIdx = blockFilterIdx / numFiltersPerGroup;
+    const int numFiltersPerGroup = numFilters / numGroups; //64
+    const int blockGroupIdx = blockFilterIdx / numFiltersPerGroup; //0
 
-    const int numModules = numModulesX * numModulesY;
-    const int blockColorIdx = numFilterColors * blockGroupIdx;
+    const int numModules = numModulesX * numModulesY; //144
+    const int blockColorIdx = numFilterColors * blockGroupIdx; // 64 * 0 = 0
 
-    const int tidx = threadIdx.y * B_X + threadIdx.x;
+    const int tidx = threadIdx.y * B_X + threadIdx.x; // linearized thread idx (0~127)
 
-    const int imgLoadModPosY = paddingStart + (moduleIdx / numModulesX) * moduleStride;
-    const int imgLoadModPosX = paddingStart + (moduleIdx % numModulesX) * moduleStride;
+    const int imgLoadModPosY = paddingStart + (moduleIdx / numModulesX) * moduleStride; // (-1 or -2) + ([0~143] / 12) * 1
+    const int imgLoadModPosX = paddingStart + (moduleIdx % numModulesX) * moduleStride; // (-1 or -2) + ([0~143] % 12) * 1
 
     const int shFilterLoadY = tidx / (B_Y * filtersPerThread);
     const int shFilterLoadX = tidx % (B_Y * filtersPerThread);
     const int myImgIdx = blockIdx.x * B_X * imgsPerThread + threadIdx.x;
+    unsigned int last_idx;
+    unsigned int shift_idx = blockFilterIdx + shFilterLoadY * numFilters + shFilterLoadX;
+    if (!conv) {
+        shift_idx += moduleIdx * numFilterColors * filterPixels * numFilters;
+    }
 
     images += blockColorIdx * imgPixels * imgStride + myImgIdx;
+    /*
     filters +=blockFilterIdx
             + shFilterLoadY * numFilters + shFilterLoadX;
     if (!conv) {
         filters += moduleIdx * numFilterColors * filterPixels * numFilters;
     }
-
+    */
     targets += moduleIdx * numImages
             + (blockFilterIdx + threadIdx.y) * numImages * numModules
             + myImgIdx;
@@ -106,16 +113,35 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
              */
             if (shFilterLoadY < B_Y) {
                 #pragma unroll
-                for (int p2 = 0; p2 < B_Y; p2 += B_X/filtersPerThread) {
+                for (int p2 = 0; p2 < B_Y; p2 += B_X/filtersPerThread /*4*/) {
                     if (p + p2 + shFilterLoadY < filterPixels) {
                         #pragma unroll
                         for (int c = 0; c < colorCache; c++) {
-                            //juhyun2
-                            //if(filters[((oc+c) * filterPixels + p + p2) * numFilters])
-                            //    shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels + p + p2) * numFilters];
+                            last_idx = shift_idx + (((oc+c) * filterPixels /*25*/ + p + p2) * numFilters);
+                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx]; 
+                            //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels /*25*/ + p + p2) * numFilters /*64*/]; 
+                            
+                            /*
+                            if(filters[last_idx] == 0.0)
+                                filters[last_idx] = blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y + 0.001;
+                            //else if(filters[last_idx] < 0.0)
 
-                            //original
-                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels + p + p2) * numFilters];
+                            else{
+                                if((((int)filters[last_idx])%10 == threadIdx.y)
+                                    && ( (((int)filters[last_idx])/10)%100 == threadIdx.x))
+                                    filters[last_idx] = filters[last_idx] + 0.001;
+                                    //filters[last_idx] = blockIdx.y*1000 + ( ((int)filters[last_idx])%1000);   
+                                else{
+                                    filters[last_idx] = filters[last_idx] + 0.001;
+                                    float fr = filters[last_idx] - (float)((int)filters[last_idx]);
+                                    filters[last_idx] = (-1.0)*(blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y + fr);
+                                }
+                            }
+
+                            // (threadIdx.x)(threadIdx.y).(blockIdx.x)(blockIdx.y)
+                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = 0; 
+                            */
+                            
                         }
                     } else {
                         #pragma unroll
@@ -166,11 +192,6 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                 for(int f = 0; f < filtersPerThread; f++) {
                     #pragma unroll
                     for(int g = 0; g < imgsPerThread; g++) {
-                        //juhyun
-                        //if(shFilters[i][threadIdx.y + f * B_Y])
-                        //    prod[f][g] += shImages[i][g * B_X + threadIdx.x] * shFilters[i][threadIdx.y + f * B_Y];
-
-                        //original
                         prod[f][g] += shImages[i][g * B_X + threadIdx.x] * shFilters[i][threadIdx.y + f * B_Y]; 
                     }
                 }
@@ -204,37 +225,39 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
 
 int main()
 {
-    float* img_data_host = readMatrix_img("img.data");
-    Matrix mat_img(img_data_host, 9216, 128);
-    NVMatrix images(mat_img, true);
-    free(img_data_host);
-
-    float* filter_data_host = readMatrix_filter("filter.data");
-    Matrix mat_filter(filter_data_host, 1600, 64); 
-    NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
-    free(filter_data_host);
-
-    float* target_data_host = readMatrix_img("targetInit.data"); 
-    Matrix mat_target(target_data_host, 9216, 128); 
-    NVMatrix targets(mat_target, true); 
-    
-
     int numImages = 128; //images.getNumCols();
     int numFilters = 64; //(64, 32) //filters.getNumCols();
-    int imgSizeY = 12; //(12, 6)
-    int imgSizeX = 12; //(12, 6) //imgPixels / imgSizeY;
-    int filterSize = 5; //(5, 3) //int(sqrt(filterPixels));
-    int paddingStart = -2; //(-2, -1)
-    int moduleStride = 1;
-    int numModulesY = 12; //(12, 6)
-    int numModulesX = 12; //(12, 6)
-    int imgStride = 128; //images.getStride();
-    int numImgColors = 64;
+    int imgSizeY = 6; //(12, 6)
+    int imgSizeX = 6; //(12, 6) //imgPixels / imgSizeY;
+    int filterSize = 3; //(5, 3) //int(sqrt(filterPixels));
+    int paddingStart = (-1) * (filterSize/2); //(-2, -1)
+    int moduleStride = 1; //one input acivation per one above(its center) neuron
+    int numModulesY = 6; //(12, 6) usually same as imgSizeY
+    int numModulesX = 6; //(12, 6)
+    int imgStride = 128; //images.getStride(); usually same as numImages
+    int numImgColors = 64; // (3, 32, 64)
     int numGroups = 1;
     float scaleTargets = 0.0;
     float scaleOutput = 1.0;
-    bool conv = true; //(true, false)
+    bool conv = false; //(true, false)
 
+    int nRowOfImg = (imgSizeX * imgSizeY) * numImgColors; //2304
+    int nRowOfFilter = (filterSize * filterSize) * (numModulesX * numModulesY) * numImgColors; //20736
+
+    float* img_data_host = readMatrix_img("data/local/zero-out_img.data", nRowOfImg, numImages); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
+    Matrix mat_img(img_data_host, nRowOfImg, numImages);
+    NVMatrix images(mat_img, true);
+    free(img_data_host);
+
+    float* filter_data_host = readMatrix_filter("data/local/zero-out_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
+    Matrix mat_filter(filter_data_host, nRowOfFilter, numFilters); 
+    NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
+    free(filter_data_host);
+
+    float* target_data_host = readMatrix_img("data/local/zero-out_targetInit.data", nRowOfImg, numImages); 
+    Matrix mat_target(target_data_host, nRowOfImg, numImages); 
+    NVMatrix targets(mat_target, true); 
+    
     int imgsPerThread = 4;
     int numFilterColors = numImgColors / numGroups;      
     int numModules = numModulesY * numModulesX;
@@ -242,7 +265,6 @@ int main()
     int filterModuleMult = conv ? 1 : numModules;
     int numFiltersPerGroup = numFilters / numGroups;
     int filterPixels = filters.getNumRows() / (filterModuleMult * numFilterColors);
-
     if(1){
         assert(filterSize * filterSize == filterPixels);
         assert(filters.getNumRows() == filterModuleMult * numFilterColors * filterPixels);
@@ -263,7 +285,6 @@ int main()
         assert(filters.isContiguous());
         assert(targets.isContiguous());
     }
-    
     dim3 blocks = numFiltersPerGroup % 32 == 0 ? dim3(DIVUP(numImages, 32 * imgsPerThread), (numModules * numFilters) / (4 * 8))
                                                : dim3(DIVUP(numImages, 32 * imgsPerThread), (numModules * numFilters) / (4 * 4));
     dim3 threads(32, 4);
@@ -276,19 +297,19 @@ int main()
         assert(targets.getNumCols() == numImages);
     }
 
-
     if(1)
-    {    
-        printf("#################\n");
-        printf("image >> rows: %d, cols: %d, stride: %d, isTrans?:%d, ownsData?:%d\n"
-            , images.getNumRows(), images.getNumRows(), images.getStride(), images.isTrans(), !images.isView());
-        printf("filters>> rows: %d, cols: %d, stride: %d, isTrans?:%d, ownsData?:%d\n"
-            , filters.getNumRows(), filters.getNumRows(), filters.getStride(), filters.isTrans(), !filters.isView());
+    {    ;
+        //printf("#################\n");
+        //printf("image >> rows: %d, cols: %d, stride: %d, isTrans?:%d, ownsData?:%d\n"
+        //    , images.getNumRows(), images.getNumRows(), images.getStride(), images.isTrans(), !images.isView());
+        //printf("filters>> rows: %d, cols: %d, stride: %d, isTrans?:%d, ownsData?:%d\n"
+        //    , filters.getNumRows(), filters.getNumRows(), filters.getStride(), filters.isTrans(), !filters.isView());
 
         //images.print(images.getNumRows(), images.getNumRows());
         //filters.print(filters.getNumRows(), filters.getNumRows());
         //targets.print(targets.getNumRows(), targets.getNumRows());
-        printf("<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+        //printf("<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+        printf("gridDim(%d,%d,%d), blockDim(%d,%d,%d)\n", blocks.x, blocks.y, blocks.z, threads.x, threads.y, threads.z);
         //exit(0);
     }
 
@@ -297,41 +318,33 @@ int main()
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
 
-    //targets.print(targets.getNumRows(), targets.getNumRows());
+    targets.print(targets.getNumRows(), targets.getNumRows());
+    //filters.print(filters.getNumRows(), filters.getNumRows());
 
     printf("\nfinish\n");
 
     cutilCheckMsg("filterActs: kernel execution failed");
 }
 
-float * readMatrix_filter(char * filename){
+float * readMatrix_filter(char * filename, int nRows, int nCols){
 
     float tmp;
     FILE *fp;
     float *full;
-    full = (float *) malloc (1600*64*sizeof(full[0]));
-    
-    /*
-    float *test;
-    test = (float *) malloc (2*3*sizeof(test[0]));
-    test[0] = 1; test[1] = 2; test[2] = 3;
-    test[3] = 4; test[4] = 5; test[5] = 6;
-    Matrix mat(test, 2, 3);
-    mat.print();
-    */
+    full = (float *) malloc (nRows*nRows*sizeof(full[0]));
 
     if((fp = fopen(filename, "r+")) == NULL) {
-        printf("No such file\n");
+        printf("No such file1\n");
         exit(1);
     }
 
-    for (int i = 0; i < 1600; ++i)
+    for (int i = 0; i < nRows; ++i)
     {
-        for (int j = 0; j < 64; ++j)
+        for (int j = 0; j < nRows; ++j)
         {
             int ret = fscanf(fp, "%f ", &tmp);
             if(ret == 1){
-                full[i*64 + j] = tmp;
+                full[i*nRows + j] = tmp;
                 //printf("%.15f\n", tmp);
             }
             else if(errno != 0) {
@@ -346,61 +359,28 @@ float * readMatrix_filter(char * filename){
             }
         }
     }
-    /*
-        for (int i = 0; i < 1600; ++i)
-        {
-            for (int j = 0; j < 64; ++j)
-            {
-                printf("%.15f ", full[i*64 + j]);
-            }
-            printf("\n");
-        }
-    */
-
-    /*
-    cudaStat1 = cudaMalloc((void**)&full_dev, 1600*64*sizeof(full_dev[0]));
-    if (cudaStat1 != cudaSuccess) {
-        printf("Error 1");
-        exit(0);
-    }
-
-    cudaStat1 = cudaMemcpy(full_dev, full, (size_t)(1600*64*sizeof(full_dev[0])), cudaMemcpyHostToDevice);
-    if (cudaStat1 != cudaSuccess) {
-        printf("erorr2");
-        exit(0);
-    }
-    */
     return full;//full_dev
 }
 
-float * readMatrix_img(char * filename){
+float * readMatrix_img(char * filename, int nRows, int nCols){
 
     float tmp;
     FILE *fp;
     float *full;
-    full = (float *) malloc (9216*128*sizeof(full[0]));
-    
-    /*
-    float *test;
-    test = (float *) malloc (2*3*sizeof(test[0]));
-    test[0] = 1; test[1] = 2; test[2] = 3;
-    test[3] = 4; test[4] = 5; test[5] = 6;
-    Matrix mat(test, 2, 3);
-    mat.print();
-    */
+    full = (float *) malloc (nRows*nRows*sizeof(full[0]));
 
     if((fp = fopen(filename, "r+")) == NULL) {
-        printf("No such file\n");
+        printf("No such file2\n");
         exit(1);
     }
 
-    for (int i = 0; i < 9216; ++i)
+    for (int i = 0; i < nRows; ++i)
     {
-        for (int j = 0; j < 128; ++j)
+        for (int j = 0; j < nRows; ++j)
         {
             int ret = fscanf(fp, "%f ", &tmp);
             if(ret == 1){
-                full[i*128 + j] = tmp;
+                full[i*nRows + j] = tmp;
                 //printf("%.15f\n", tmp);
             }
             else if(errno != 0) {
