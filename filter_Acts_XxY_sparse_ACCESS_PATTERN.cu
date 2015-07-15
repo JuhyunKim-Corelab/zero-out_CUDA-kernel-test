@@ -8,8 +8,8 @@
 #define IMG_SIZE 9216
 #define FILTER_SIZE 1600
 
-float * readMatrix_filter(char * filename);
-float * readMatrix_img(char * filename);
+float * readMatrix_filter(char * filename, int nRows, int nCols);
+float * readMatrix_img(char * filename, int nRows, int nCols);
 float * genMatrix_img(int m, int n, float val);
 void print_result(float* result, int mR, int nR, int real_mR, int real_nR, int isRowMajor);
 
@@ -90,7 +90,7 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
     if (!conv) {
         filters += moduleIdx * numFilterColors * filterPixels * numFilters;
     }
-*/
+    */
     targets += moduleIdx * numImages
             + (blockFilterIdx + threadIdx.y) * numImages * numModules
             + myImgIdx;
@@ -230,36 +230,41 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
 
 int main()
 {
-    float* img_data_host = readMatrix_img("data/img.data"); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
-    Matrix mat_img(img_data_host, 9216, 128);
-    NVMatrix images(mat_img, true);
-    free(img_data_host);
-
-    float* filter_data_host = readMatrix_filter("data/zero_filter.data");
-    Matrix mat_filter(filter_data_host, 1600, 64); 
-    NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
-    free(filter_data_host);
-
-    float* target_data_host = readMatrix_img("data/targetInit.data"); 
-    Matrix mat_target(target_data_host, 9216, 128); 
-    NVMatrix targets(mat_target, true); 
-    
-
     int numImages = 128; //images.getNumCols();
     int numFilters = 64; //(64, 32) //filters.getNumCols();
-    int imgSizeY = 12; //(12, 6)
-    int imgSizeX = 12; //(12, 6) //imgPixels / imgSizeY;
-    int filterSize = 5; //(5, 3) //int(sqrt(filterPixels));
-    int paddingStart = -2; //(-2, -1)
-    int moduleStride = 1;
-    int numModulesY = 12; //(12, 6)
-    int numModulesX = 12; //(12, 6)
-    int imgStride = 128; //images.getStride();
-    int numImgColors = 64;
+    int imgSizeY = 6; //(12, 6)
+    int imgSizeX = 6; //(12, 6) //imgPixels / imgSizeY;
+    int filterSize = 3; //(5, 3) //int(sqrt(filterPixels));
+    int paddingStart = (-1) * (filterSize/2); //(-2, -1)
+    int moduleStride = 1; //one input acivation per one above(its center) neuron
+    int numModulesY = 6; //(12, 6) usually same as imgSizeY
+    int numModulesX = 6; //(12, 6)
+    int imgStride = 128; //images.getStride(); usually same as numImages
+    int numImgColors = 64; // (3, 32, 64)
     int numGroups = 1;
     float scaleTargets = 0.0;
     float scaleOutput = 1.0;
-    bool conv = true; //(true, false)
+    bool conv = false; //(true, false)
+
+    int nRowOfImg = (imgSizeX * imgSizeY) * numImgColors; //2304
+    int nRowOfFilter = (filterSize * filterSize) * (numModulesX * numModulesY) * numImgColors; //20736
+
+    float* img_data_host = readMatrix_img("data/local/img.data", nRowOfImg, numImages); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
+    Matrix mat_img(img_data_host, nRowOfImg, numImages);
+    NVMatrix images(mat_img, true);
+    free(img_data_host);
+
+    float* filter_data_host = readMatrix_filter("data/local/zero_filter.data", nRowOfFilter, numFilters);
+    Matrix mat_filter(filter_data_host, nRowOfFilter, numFilters); 
+    NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
+    free(filter_data_host);
+
+    float* target_data_host = readMatrix_img("data/local/targetInit.data", nRowOfImg, numImages); 
+    Matrix mat_target(target_data_host, nRowOfImg, numImages); 
+    NVMatrix targets(mat_target, true); 
+    
+
+
 
     int imgsPerThread = 4;
     int numFilterColors = numImgColors / numGroups;      
@@ -332,34 +337,25 @@ int main()
     cutilCheckMsg("filterActs: kernel execution failed");
 }
 
-float * readMatrix_filter(char * filename){
+float * readMatrix_filter(char * filename, int nRows, int nCols){
 
     float tmp;
     FILE *fp;
     float *full;
-    full = (float *) malloc (1600*64*sizeof(full[0]));
-    
-    /*
-    float *test;
-    test = (float *) malloc (2*3*sizeof(test[0]));
-    test[0] = 1; test[1] = 2; test[2] = 3;
-    test[3] = 4; test[4] = 5; test[5] = 6;
-    Matrix mat(test, 2, 3);
-    mat.print();
-    */
+    full = (float *) malloc (nRows*nRows*sizeof(full[0]));
 
     if((fp = fopen(filename, "r+")) == NULL) {
         printf("No such file1\n");
         exit(1);
     }
 
-    for (int i = 0; i < 1600; ++i)
+    for (int i = 0; i < nRows; ++i)
     {
-        for (int j = 0; j < 64; ++j)
+        for (int j = 0; j < nRows; ++j)
         {
             int ret = fscanf(fp, "%f ", &tmp);
             if(ret == 1){
-                full[i*64 + j] = tmp;
+                full[i*nRows + j] = tmp;
                 //printf("%.15f\n", tmp);
             }
             else if(errno != 0) {
@@ -374,61 +370,28 @@ float * readMatrix_filter(char * filename){
             }
         }
     }
-    /*
-        for (int i = 0; i < 1600; ++i)
-        {
-            for (int j = 0; j < 64; ++j)
-            {
-                printf("%.15f ", full[i*64 + j]);
-            }
-            printf("\n");
-        }
-    */
-
-    /*
-    cudaStat1 = cudaMalloc((void**)&full_dev, 1600*64*sizeof(full_dev[0]));
-    if (cudaStat1 != cudaSuccess) {
-        printf("Error 1");
-        exit(0);
-    }
-
-    cudaStat1 = cudaMemcpy(full_dev, full, (size_t)(1600*64*sizeof(full_dev[0])), cudaMemcpyHostToDevice);
-    if (cudaStat1 != cudaSuccess) {
-        printf("erorr2");
-        exit(0);
-    }
-    */
     return full;//full_dev
 }
 
-float * readMatrix_img(char * filename){
+float * readMatrix_img(char * filename, int nRows, int nCols){
 
     float tmp;
     FILE *fp;
     float *full;
-    full = (float *) malloc (9216*128*sizeof(full[0]));
-    
-    /*
-    float *test;
-    test = (float *) malloc (2*3*sizeof(test[0]));
-    test[0] = 1; test[1] = 2; test[2] = 3;
-    test[3] = 4; test[4] = 5; test[5] = 6;
-    Matrix mat(test, 2, 3);
-    mat.print();
-    */
+    full = (float *) malloc (nRows*nRows*sizeof(full[0]));
 
     if((fp = fopen(filename, "r+")) == NULL) {
         printf("No such file2\n");
         exit(1);
     }
 
-    for (int i = 0; i < 9216; ++i)
+    for (int i = 0; i < nRows; ++i)
     {
-        for (int j = 0; j < 128; ++j)
+        for (int j = 0; j < nRows; ++j)
         {
             int ret = fscanf(fp, "%f ", &tmp);
             if(ret == 1){
-                full[i*128 + j] = tmp;
+                full[i*nRows + j] = tmp;
                 //printf("%.15f\n", tmp);
             }
             else if(errno != 0) {

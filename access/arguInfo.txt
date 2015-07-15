@@ -11,479 +11,479 @@
 Importing _ConvNet C++ module
 MapSMtoCores undefined SMversion 3.0!
 
- ##### start time:  1436937011.28  #####
+ ##### start time:  1436939900.2  #####
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:0, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:1, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:2, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:3, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:4, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:5, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:6, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:7, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:8, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:9, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:10, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:11, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:12, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:13, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:14, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:15, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:16, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:17, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:18, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:19, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:20, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:21, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:22, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:23, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:24, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:25, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:26, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:27, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:28, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:29, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:30, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:31, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:32, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:33, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:34, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:35, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:36, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:37, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:38, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:39, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:40, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:41, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:42, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:43, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:44, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:45, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:46, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:47, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:48, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:49, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:50, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:51, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:52, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:53, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:54, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:55, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:56, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:57, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:58, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:59, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:60, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:61, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:62, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:63, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:64, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:65, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:66, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:67, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:68, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:69, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:70, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:71, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:72, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:73, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:74, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:75, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:76, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:77, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:78, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:79, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:80, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:81, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:82, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:83, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:84, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:85, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:86, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:87, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:88, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:89, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:90, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:91, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:92, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:93, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:94, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:95, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:96, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:97, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:98, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:99, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:100, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:101, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:102, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:103, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:104, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:105, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:106, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:107, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:108, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:109, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:110, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:111, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:112, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:113, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:114, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:115, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:116, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:117, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:118, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:119, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:120, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:121, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:122, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:123, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:124, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:125, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:126, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:127, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:128, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:129, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:130, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:131, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:132, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:133, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:134, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:135, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:136, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:137, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:138, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:139, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:140, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:141, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:142, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:143, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:144, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:145, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:146, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:147, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:148, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:149, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:150, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:151, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:152, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:153, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 64, isTrans?:0, ownsData?:1, numFilters:64, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:154, 
 image >> rows: 2304, cols: 2304, stride: 128, isTrans?:0, ownsData?:1, numImgColors:64, numImages:128, imgSizeXY:6-6, imgStride:128
-filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6
-targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1
+filters>> rows: 20736, cols: 20736, stride: 32, isTrans?:0, ownsData?:1, numFilters:32, filterSize:3, paddingStart:-1, numModulesXY:6-6, moduleStride:1
+targets>> rows: 1152, cols: 1152, stride: 128, isTrans?:0, ownsData?:1, numGroups:1, scaleTargets:0.000000, scaleOutput:1.000000, selector:155, 
 batch 6: ({'logprob': [4210.634027481079, 1416.0]}, 10000)
 
- ##### end time:  1436937013.86  #####
- ##### total execution time:  2.57446193695  #####
+ ##### end time:  1436939902.77  #####
+ ##### total execution time:  2.57788896561  #####
 ======================Test output======================
 logprob:  0.421063, 0.141600 
 ------------------------------------------------------- 
