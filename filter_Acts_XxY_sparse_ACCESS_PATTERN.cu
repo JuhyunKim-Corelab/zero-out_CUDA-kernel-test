@@ -76,11 +76,10 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
     const int shFilterLoadY = tidx / (B_Y * filtersPerThread);
     const int shFilterLoadX = tidx % (B_Y * filtersPerThread);
     const int myImgIdx = blockIdx.x * B_X * imgsPerThread + threadIdx.x;
-
-    unsigned int shift_idx = blockFilterIdx
-            + shFilterLoadY * numFilters + shFilterLoadX;
+    unsigned int last_idx;
+    unsigned int shift_idx = blockFilterIdx + shFilterLoadY * numFilters + shFilterLoadX;
     if (!conv) {
-        shift_idx = moduleIdx * numFilterColors * filterPixels * numFilters;
+        shift_idx += moduleIdx * numFilterColors * filterPixels * numFilters;
     }
 
     images += blockColorIdx * imgPixels * imgStride + myImgIdx;
@@ -118,10 +117,11 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                     if (p + p2 + shFilterLoadY < filterPixels) {
                         #pragma unroll
                         for (int c = 0; c < colorCache; c++) {
-                            unsigned int last_idx = shift_idx + (((oc+c) * filterPixels /*25*/ + p + p2) * numFilters);
+                            last_idx = shift_idx + (((oc+c) * filterPixels /*25*/ + p + p2) * numFilters);
                             shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx]; 
                             //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels /*25*/ + p + p2) * numFilters /*64*/]; 
                             
+                            /*
                             if(filters[last_idx] == 0.0)
                                 filters[last_idx] = blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y + 0.001;
                             //else if(filters[last_idx] < 0.0)
@@ -137,10 +137,10 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                                     filters[last_idx] = (-1.0)*(blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y + fr);
                                 }
                             }
-                            
 
                             // (threadIdx.x)(threadIdx.y).(blockIdx.x)(blockIdx.y)
                             shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = 0; 
+                            */
                             
                         }
                     } else {
@@ -192,11 +192,6 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                 for(int f = 0; f < filtersPerThread; f++) {
                     #pragma unroll
                     for(int g = 0; g < imgsPerThread; g++) {
-                        //juhyun
-                        //if(shFilters[i][threadIdx.y + f * B_Y])
-                        //    prod[f][g] += shImages[i][g * B_X + threadIdx.x] * shFilters[i][threadIdx.y + f * B_Y];
-
-                        //original
                         prod[f][g] += shImages[i][g * B_X + threadIdx.x] * shFilters[i][threadIdx.y + f * B_Y]; 
                     }
                 }
@@ -249,23 +244,20 @@ int main()
     int nRowOfImg = (imgSizeX * imgSizeY) * numImgColors; //2304
     int nRowOfFilter = (filterSize * filterSize) * (numModulesX * numModulesY) * numImgColors; //20736
 
-    float* img_data_host = readMatrix_img("data/local/img.data", nRowOfImg, numImages); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
+    float* img_data_host = readMatrix_img("data/local/zero-out_img.data", nRowOfImg, numImages); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
     Matrix mat_img(img_data_host, nRowOfImg, numImages);
     NVMatrix images(mat_img, true);
     free(img_data_host);
 
-    float* filter_data_host = readMatrix_filter("data/local/zero_filter.data", nRowOfFilter, numFilters);
+    float* filter_data_host = readMatrix_filter("data/local/zero-out_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
     Matrix mat_filter(filter_data_host, nRowOfFilter, numFilters); 
     NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
     free(filter_data_host);
 
-    float* target_data_host = readMatrix_img("data/local/targetInit.data", nRowOfImg, numImages); 
+    float* target_data_host = readMatrix_img("data/local/zero-out_targetInit.data", nRowOfImg, numImages); 
     Matrix mat_target(target_data_host, nRowOfImg, numImages); 
     NVMatrix targets(mat_target, true); 
     
-
-
-
     int imgsPerThread = 4;
     int numFilterColors = numImgColors / numGroups;      
     int numModules = numModulesY * numModulesX;
@@ -273,7 +265,6 @@ int main()
     int filterModuleMult = conv ? 1 : numModules;
     int numFiltersPerGroup = numFilters / numGroups;
     int filterPixels = filters.getNumRows() / (filterModuleMult * numFilterColors);
-
     if(1){
         assert(filterSize * filterSize == filterPixels);
         assert(filters.getNumRows() == filterModuleMult * numFilterColors * filterPixels);
@@ -294,7 +285,6 @@ int main()
         assert(filters.isContiguous());
         assert(targets.isContiguous());
     }
-    
     dim3 blocks = numFiltersPerGroup % 32 == 0 ? dim3(DIVUP(numImages, 32 * imgsPerThread), (numModules * numFilters) / (4 * 8))
                                                : dim3(DIVUP(numImages, 32 * imgsPerThread), (numModules * numFilters) / (4 * 4));
     dim3 threads(32, 4);
@@ -306,7 +296,6 @@ int main()
         assert(targets.getNumRows() == numFilters * numModules);
         assert(targets.getNumCols() == numImages);
     }
-
 
     if(1)
     {    ;
@@ -329,8 +318,8 @@ int main()
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
 
-    //targets.print(targets.getNumRows(), targets.getNumRows());
-    filters.print(filters.getNumRows(), filters.getNumRows());
+    targets.print(targets.getNumRows(), targets.getNumRows());
+    //filters.print(filters.getNumRows(), filters.getNumRows());
 
     printf("\nfinish\n");
 
