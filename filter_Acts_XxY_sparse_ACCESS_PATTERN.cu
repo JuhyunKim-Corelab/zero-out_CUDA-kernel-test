@@ -94,9 +94,15 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
         filters += moduleIdx * numFilterColors * filterPixels * numFilters;
     }
     */
+    unsigned int last_idx_targets;
+    unsigned int shift_idx_targets = moduleIdx * numImages
+            + (blockFilterIdx + threadIdx.y) * numImages * numModules
+            + myImgIdx;
+    /*
     targets += moduleIdx * numImages
             + (blockFilterIdx + threadIdx.y) * numImages * numModules
             + myImgIdx;
+    */
 
     float prod[filtersPerThread][imgsPerThread];
     #pragma unroll
@@ -125,8 +131,8 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                             shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx_filter]; 
                             //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels /*25*/ + p + p2) * numFilters /*64*/]; 
 
-                            if(filters[last_idx_filter] != 0.0)
-                                shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = (float)last_idx_filter + (filters[last_idx_filter])*0.1;
+                            //if(filters[last_idx_filter] != 0.0)
+                            //    shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = (float)last_idx_filter + (filters[last_idx_filter])*0.1;
 
                             //if(filters[last_idx_filter] == 0.0)
                             //    filters[last_idx_filter] = (float)moduleIdx + (oc+c)*100;
@@ -196,9 +202,11 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                 for(int f = 0; f < filtersPerThread; f++) {
                     #pragma unroll
                     for(int g = 0; g < imgsPerThread; g++) {
-                        prod[f][g] += shImages[i][g * B_X + threadIdx.x] * shFilters[i][threadIdx.y + f * B_Y]; 
+                        //prod[f][g] += shImages[i][g * B_X + threadIdx.x] * shFilters[i][threadIdx.y + f * B_Y]; 
                         if(shFilters[i][threadIdx.y + f * B_Y] != 0.0)
-                            images[((int)(shImages[i][g * B_X + threadIdx.x]))] = shFilters[i][threadIdx.y + f * B_Y];
+                            prod[f][g] += 1.0; 
+                        //if(shFilters[i][threadIdx.y + f * B_Y] != 0.0)
+                        //    images[((int)(shImages[i][g * B_X + threadIdx.x]))] = shFilters[i][threadIdx.y + f * B_Y];
                     }
                 }
             }
@@ -222,7 +230,8 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
             if (!checkImgBounds || myImgIdx + g * B_X < numImages) {
                 #pragma unroll
                 for (int f = 0; f < filtersPerThread; f++) {
-                    targets[g * B_X + f * B_Y * numImages * numModules] = scaleOutputs * prod[f][g];
+                    last_idx_targets = shift_idx_targets + (g * B_X + f * B_Y * numImages * numModules);
+                    targets[last_idx_targets] = scaleOutputs * prod[f][g];
                 }
             }
         }
@@ -255,7 +264,8 @@ int main()
     NVMatrix images(mat_img, true);
     free(img_data_host);
 
-    float* filter_data_host = readMatrix_filter("data/local/14th_neuron_0th_color_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
+    float* filter_data_host = readMatrix_filter("data/local/zero-out_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
+    //float* filter_data_host = readMatrix_filter("data/local/14th_neuron_0th_color_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
     Matrix mat_filter(filter_data_host, nRowOfFilter, numFilters); 
     NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
     free(filter_data_host);
@@ -324,9 +334,9 @@ int main()
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
 
-    //targets.print(targets.getNumRows(), targets.getNumRows());
+    targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
-    images.print(images.getNumRows(), images.getNumRows());
+    //images.print(images.getNumRows(), images.getNumRows());
 
     printf("\nfinish\n");
 
