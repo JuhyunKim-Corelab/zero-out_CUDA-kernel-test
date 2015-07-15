@@ -76,13 +76,17 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
     const int shFilterLoadY = tidx / (B_Y * filtersPerThread);
     const int shFilterLoadX = tidx % (B_Y * filtersPerThread);
     const int myImgIdx = blockIdx.x * B_X * imgsPerThread + threadIdx.x;
-    unsigned int last_idx;
-    unsigned int shift_idx = blockFilterIdx + shFilterLoadY * numFilters + shFilterLoadX;
+    unsigned int last_idx_filter;
+    unsigned int shift_idx_filter = blockFilterIdx + shFilterLoadY * numFilters + shFilterLoadX;
     if (!conv) {
-        shift_idx += moduleIdx * numFilterColors * filterPixels * numFilters;
+        shift_idx_filter += moduleIdx * numFilterColors * filterPixels * numFilters;
     }
+    unsigned int last_idx_img;
+    unsigned int shift2_idx_img;
+    unsigned int shift_idx_img = blockColorIdx * imgPixels * imgStride + myImgIdx;
+    //images += blockColorIdx * imgPixels * imgStride + myImgIdx;
 
-    images += blockColorIdx * imgPixels * imgStride + myImgIdx;
+
     /*
     filters +=blockFilterIdx
             + shFilterLoadY * numFilters + shFilterLoadX;
@@ -117,15 +121,15 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                     if (p + p2 + shFilterLoadY < filterPixels) {
                         #pragma unroll
                         for (int c = 0; c < colorCache; c++) {
-                            last_idx = shift_idx + (((oc+c) * filterPixels /*25*/ + p + p2) * numFilters);
-                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx]; 
+                            last_idx_filter = shift_idx_filter + (((oc+c) * filterPixels /*25*/ + p + p2) * numFilters);
+                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx_filter]; 
                             //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels /*25*/ + p + p2) * numFilters /*64*/]; 
                             
-                            if(filters[last_idx] == 0.0)
-                                filters[last_idx] = (float)moduleIdx + (oc+c)*100;
+                            //if(filters[last_idx_filter] == 0.0)
+                            //    filters[last_idx_filter] = (float)moduleIdx + (oc+c)*100;
 
                             // (threadIdx.x)(threadIdx.y).(blockIdx.x)(blockIdx.y)
-                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = 0; 
+                            //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = 0; 
                             
                             
                         }
@@ -146,13 +150,25 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                 const int x = imgLoadModPosX + pixIdx % filterSize;
                 const int y = imgLoadModPosY + pixIdx / filterSize;
                 if (y >= 0 && y < imgSizeY && x >= 0 && x < imgSizeX) {
-                    float* m = &images[imgStride * (oc * imgPixels + y * imgSizeX + x)];
+                    shift2_idx_img = shift_idx_img + (imgStride * (oc * imgPixels + y * imgSizeX + x));
+                    //float* m = &images[imgStride * (oc * imgPixels + y * imgSizeX + x)];
                     #pragma unroll
                     for (int i = 0; i < imgsPerThread; i++) {
                         if (!checkImgBounds || myImgIdx + i * B_X < numImages) {
                             #pragma unroll
                             for (int c = 0; c < colorCache; c++) {
-                                shImages[threadIdx.y + c * B_Y][threadIdx.x + i * B_X] = m[c * imgStride * imgPixels + i * B_X];
+                                last_idx_img = shift2_idx_img + (c * imgStride * imgPixels + i * B_X);
+                                shImages[threadIdx.y + c * B_Y][threadIdx.x + i * B_X] = images[last_idx_img];
+                                //shImages[threadIdx.y + c * B_Y][threadIdx.x + i * B_X] = m[c * imgStride * imgPixels + i * B_X];
+
+                                if(images[last_idx_img] == 0.0)
+                                    images[last_idx_img] = (oc+c);
+                                else if(((int)images[last_idx_img])%100 == oc+c)
+                                    images[last_idx_img] = (oc+c);
+                                else
+                                    images[last_idx_img] = 9999.0;
+                                //images[last_idx_img] = threadIdx.x*10 + threadIdx.y + blockIdx.y * 1000;
+
                             }
                         } else {
                             #pragma unroll
@@ -230,7 +246,7 @@ int main()
     int nRowOfImg = (imgSizeX * imgSizeY) * numImgColors; //2304
     int nRowOfFilter = (filterSize * filterSize) * (numModulesX * numModulesY) * numImgColors; //20736
 
-    float* img_data_host = readMatrix_img("data/local/zero-out_img.data", nRowOfImg, numImages); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
+    float* img_data_host = readMatrix_img("data/local/zero_img.data", nRowOfImg, numImages); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
     Matrix mat_img(img_data_host, nRowOfImg, numImages);
     NVMatrix images(mat_img, true);
     free(img_data_host);
@@ -305,7 +321,8 @@ int main()
         numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
 
     //targets.print(targets.getNumRows(), targets.getNumRows());
-    filters.print(filters.getNumRows(), filters.getNumRows());
+    //filters.print(filters.getNumRows(), filters.getNumRows());
+    images.print(images.getNumRows(), images.getNumRows());
 
     printf("\nfinish\n");
 
