@@ -124,14 +124,15 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                             last_idx_filter = shift_idx_filter + (((oc+c) * filterPixels /*25*/ + p + p2) * numFilters);
                             shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx_filter]; 
                             //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels /*25*/ + p + p2) * numFilters /*64*/]; 
-                            
+
+                            if(filters[last_idx_filter] != 0.0)
+                                shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = (float)last_idx_filter + (filters[last_idx_filter])*0.1;
+
                             //if(filters[last_idx_filter] == 0.0)
                             //    filters[last_idx_filter] = (float)moduleIdx + (oc+c)*100;
 
                             // (threadIdx.x)(threadIdx.y).(blockIdx.x)(blockIdx.y)
                             //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = 0; 
-                            
-                            
                         }
                     } else {
                         #pragma unroll
@@ -160,13 +161,14 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                                 last_idx_img = shift2_idx_img + (c * imgStride * imgPixels + i * B_X);
                                 shImages[threadIdx.y + c * B_Y][threadIdx.x + i * B_X] = images[last_idx_img];
                                 //shImages[threadIdx.y + c * B_Y][threadIdx.x + i * B_X] = m[c * imgStride * imgPixels + i * B_X];
+                                shImages[threadIdx.y + c * B_Y][threadIdx.x + i * B_X] = (float)last_idx_img;
 
-                                if(images[last_idx_img] == 0.0)
-                                    images[last_idx_img] = (oc+c);
-                                else if(((int)images[last_idx_img])%100 == oc+c)
-                                    images[last_idx_img] = (oc+c);
-                                else
-                                    images[last_idx_img] = 9999.0;
+                                //if(images[last_idx_img] == 0.0)
+                                //    images[last_idx_img] = (oc+c);
+                                //else if(((int)images[last_idx_img])%100 == oc+c)
+                                //    images[last_idx_img] = (oc+c);
+                                //else
+                                //    images[last_idx_img] = 9999.0;
                                 //images[last_idx_img] = threadIdx.x*10 + threadIdx.y + blockIdx.y * 1000;
 
                             }
@@ -195,6 +197,8 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                     #pragma unroll
                     for(int g = 0; g < imgsPerThread; g++) {
                         prod[f][g] += shImages[i][g * B_X + threadIdx.x] * shFilters[i][threadIdx.y + f * B_Y]; 
+                        if(shFilters[i][threadIdx.y + f * B_Y] != 0.0)
+                            images[((int)(shImages[i][g * B_X + threadIdx.x]))] = shFilters[i][threadIdx.y + f * B_Y];
                     }
                 }
             }
@@ -251,7 +255,7 @@ int main()
     NVMatrix images(mat_img, true);
     free(img_data_host);
 
-    float* filter_data_host = readMatrix_filter("data/local/zero_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
+    float* filter_data_host = readMatrix_filter("data/local/14th_neuron_0th_color_filter.data", nRowOfFilter, numFilters); //"data/local/zero-out_zero_filter.data"
     Matrix mat_filter(filter_data_host, nRowOfFilter, numFilters); 
     NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
     free(filter_data_host);
