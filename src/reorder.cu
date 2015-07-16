@@ -87,9 +87,8 @@ int main()
         assert(filters.isContiguous());
         assert(targets.isContiguous());
     }
-    dim3 blocks = numFiltersPerGroup % 32 == 0 ? dim3(DIVUP(numImages, 32 * imgsPerThread), (numModules * numFilters) / (4 * 8))
-                                               : dim3(DIVUP(numImages, 32 * imgsPerThread), (numModules * numFilters) / (4 * 4));
-    dim3 threads(32, 4);
+    dim3 blocks (64, 1, 1); // ceil(2027/32) = (2027 - 1)/32 + 1
+    dim3 threads(32, 1, 1);
     bool checkImgBounds = numImages % (32*imgsPerThread) != 0;
     
     if (scaleTargets == 0) {
@@ -119,7 +118,7 @@ int main()
     cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferNone);
     reorderedFilters <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(),
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
-        numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
+        numModulesX, imgStride, numImgColors, scaleTargets, scaleOutput, conv);
 
     //targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
@@ -139,7 +138,35 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
                                        const float scaleTargets, const float scaleOutputs,
                                        const bool conv)
 {
-    
+    //__shared__ float shFilters[Y][X];
+    //__shared__ float shImages[Y][X];
+    const int nMaxConnPerNeuron = (filterSize*filterSize) * numImgColors;
+    const int neuronIdx = blockIdx.x*blockDim.x + threadIdx.x;
+    const int nNeuronPerFilter = numModulesX * numModulesY;//36
+
+    float privWeight[576];//privWeight[nMaxConnPerNeuron]; 
+    float prod = 0;
+
+    /*
+     * (weight load) initialization Phase
+     */
+     const unsigned loc = (neuronIdx%nNeuronPerFilter)*(numFilters*nMaxConnPerNeuron) + (neuronIdx/nNeuronPerFilter);//for first weight in that neuron
+     for (int i = 0; i < nMaxConnPerNeuron; ++i){
+         //(neuronIdx%nNeuronPerFilter)*(numFilters*nMaxConnPerNeuron) + (neuronIdx/nNeuronPerFilter);
+         privWeight[i] = filters[loc + numFilters*i];
+     }
+
+    /*
+     * (activation) Load Phase
+     */
+
+     /*
+     * Computation Phase
+     */
+
+     /*
+     * Store Phase
+     */
 }
 
 
