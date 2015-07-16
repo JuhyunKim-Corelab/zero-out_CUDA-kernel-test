@@ -52,13 +52,13 @@ int main()
         NVMatrix images(mat_img, true);
         free(img_data_host);
 
-        float* filter_data_host = readMatrix_filter("../data/local/zero-out_filter.data", nRowOfFilter, numFilters); //"../data/local/zero-out_zero_filter.data"
+        float* filter_data_host = readMatrix_filter("../data/local/zero-out_filter.reordered.data", nRowOfFilter, numFilters); //"../data/local/zero-out_zero_filter.data"
         //float* filter_data_host = readMatrix_filter("../data/local/14th_neuron_0th_color_filter.data", nRowOfFilter, numFilters); //"../data/local/zero-out_zero_filter.data"
         Matrix mat_filter(filter_data_host, nRowOfFilter, numFilters); 
         NVMatrix filters(mat_filter, true);//filters(FILTER_SIZE, FILTER_SIZE, false);
         free(filter_data_host);
 
-        float* target_data_host = readMatrix_img("../data/local/zero-out_targetInit.data", nRowOfImg, numImages); 
+        float* target_data_host = readMatrix_img("../data/local/zero_img.data", nRowOfImg, numImages); //zero-out_targetInit.data
         Matrix mat_target(target_data_host, nRowOfImg, numImages); 
         NVMatrix targets(mat_target, true); 
 
@@ -128,7 +128,7 @@ int main()
         //filters.print(filters.getNumRows(), filters.getNumRows());
         //targets.print(targets.getNumRows(), targets.getNumRows());
         //printf("<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-        printf("gridDim(%d,%d,%d), blockDim(%d,%d,%d)\n", blocks.x, blocks.y, blocks.z, threads.x, threads.y, threads.z);
+        //printf("gridDim(%d,%d,%d), blockDim(%d,%d,%d)\n", blocks.x, blocks.y, blocks.z, threads.x, threads.y, threads.z);
         //exit(0);
     }
     
@@ -184,7 +184,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
      * (activation) Load Phase
      */
     int act_idx;
-    const int center = neuronIdx_old/nMaxConnPerNeuron;//center : neuronIdx_old w/o color info
+    const int center = neuronIdx_old%nNeuronPerFilter;//center : neuronIdx_old w/o color info
     //check padding condition
     //   * 1 *
     //   2   3
@@ -206,7 +206,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
             if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
                 for (int x = 0; x < filterSize; ++x){
                     if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
-                        privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(36) + upperLeft + y*imgSizeX + x)*numImages + 0];// [()*numImages + "n-th image"] // n:[0-127]
+                        privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + 0];// [()*numImages + "n-th image"] // n:[0-127]
                         act_idx++;
                     }
                     else{
@@ -234,7 +234,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
      /*
      * Store Phase
      */
-     targets[(neuronIdx_old)*numImages + 0] = prod; //target[()*numImages + "n-th image"]
+    targets[(neuronIdx_old)*numImages + 0] = prod; //target[()*numImages + "n-th image"]
 }
 
 
