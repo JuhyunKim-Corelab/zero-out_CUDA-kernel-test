@@ -47,7 +47,7 @@ int main()
         int nRowOfImg = (imgSizeX * imgSizeY) * numImgColors; //2304
         int nRowOfFilter = (filterSize * filterSize) * (numModulesX * numModulesY) * numImgColors; //20736
 
-        float* img_data_host = readMatrix_img("../data/local/zero_img.data", nRowOfImg, numImages); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
+        float* img_data_host = readMatrix_img("../data/local/zero-out_img.data", nRowOfImg, numImages); //  cur dir : /home/seungbin/npu/test/recompile-zero-out
         Matrix mat_img(img_data_host, nRowOfImg, numImages);
         NVMatrix images(mat_img, true);
         free(img_data_host);
@@ -140,7 +140,7 @@ int main()
 
     //targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
-    images.print(images.getNumRows(), images.getNumRows());
+    targets.print(targets.getNumRows(), targets.getNumRows());
 
     printf("\nfinish\n");
 
@@ -161,6 +161,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
     //__shared__ float shImages[Y][X];
     const int nMaxConnPerNeuron = (filterSize*filterSize) * numImgColors;
     const int neuronIdx = blockIdx.x*blockDim.x + threadIdx.x;
+    if(neuronIdx >= N_LIVING_NEURON) return;
     const int nNeuronPerFilter = numModulesX * numModulesY;//36
     const int neuronIdx_old = mapping[neuronIdx];
 
@@ -184,13 +185,41 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
      */
     int act_idx;
     const int center = neuronIdx_old/nMaxConnPerNeuron;//center : neuronIdx_old w/o color info
+    //check padding condition
+    //   * 1 *
+    //   2   3
+    //   * 4 *
+    int padding1 = 0;
+    int padding2 = 0;
+    int padding3 = 0;
+    int padding4 = 0;
+    for (int i = 0; i < filterSize/2; ++i){
+        padding1 += (int)(center/imgSizeX == i);
+        padding2 += (int)(center%imgSizeX == i);
+        padding3 += (int)((imgSizeX - 1) - center%imgSizeX == i);
+        padding4 += (int)((imgSizeX - 1) - center/imgSizeX == i);
+    }
     const int upperLeft = center - ((filterSize)/2) - imgSizeX*((filterSize)/2);
     for (int c = 0; c < numImgColors; ++c){
         act_idx = 0;
         for (int y = 0; y < filterSize; ++y){
-            for (int x = 0; x < filterSize; ++x){
-                privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(36) + upperLeft + y*imgSizeX + x)*numImages + 0];// [()*numImages + "n-th image"] // n:[0-127]
-                act_idx++;
+            if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
+                for (int x = 0; x < filterSize; ++x){
+                    if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
+                        privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(36) + upperLeft + y*imgSizeX + x)*numImages + 0];// [()*numImages + "n-th image"] // n:[0-127]
+                        act_idx++;
+                    }
+                    else{
+                        privAct[c*(filterSize*filterSize) + act_idx] = 0.0;// [()*numImages + "n-th image"] // n:[0-127]
+                        act_idx++;
+                    }     
+                }
+            }
+            else{
+                for (int x = 0; x < filterSize; ++x){
+                    privAct[c*(filterSize*filterSize) + act_idx] = 0.0;//
+                    act_idx++;
+                }
             }
         }
     }
