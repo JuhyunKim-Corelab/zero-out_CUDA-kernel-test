@@ -19,7 +19,6 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
                                        const int moduleStride, //1
                                        const int numModulesY, const int numModulesX, //12, 12
                                        const int imgStride, const int numImgColors, //128, 64
-                                       const int numGroups,  //1
                                        const float scaleTargets, const float scaleOutputs,
                                        const bool conv);
 
@@ -117,10 +116,10 @@ int main()
     }
     
     //cudaFuncCachePreferNone//cudaFuncCachePreferShared//cudaFuncCachePreferL1
-    //cudaFuncSetCacheConfig(filterActs_YxX_sparse< 4, 32, 4, 8, 2, false, false >, cudaFuncCachePreferShared);
-    //filterActs_YxX_sparse < 4, 32, 4, 8, 2, false, false > <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(),
-    //    numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
-    //    numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
+    cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferNone);
+    reorderedFilters <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(),
+        numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
+        numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
 
     //targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
@@ -135,14 +134,28 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
                                        const int numImages, const int numFilters, //128, 64
                                        const int imgSizeY, const int imgSizeX, const int filterSize, const int paddingStart,
                                        const int moduleStride, //1
-                                       const int numModulesY, const int numModulesX, //12, 12
+                                       const int numModulesY, const int numModulesX, //6, 6
                                        const int imgStride, const int numImgColors, //128, 64
-                                       const int numGroups,  //1
                                        const float scaleTargets, const float scaleOutputs,
                                        const bool conv)
 {
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
