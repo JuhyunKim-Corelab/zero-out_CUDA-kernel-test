@@ -100,7 +100,7 @@ int main(){
 
 bool compare_nzConn (Neuron i, Neuron j)
 {
-  return (i.nNonzeroConn < j.nNonzeroConn);
+  return (i.nNonzeroConn > j.nNonzeroConn);
 }
 
 // stable_sort example
