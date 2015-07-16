@@ -7,13 +7,16 @@
 
 #define IMG_SIZE 9216
 #define FILTER_SIZE 1600
+#define N_LIVING_NEURON 2027
 
 float * readMatrix_filter(char * filename, int nRows, int nCols);
 float * readMatrix_img(char * filename, int nRows, int nCols);
 float * genMatrix_img(int m, int n, float val);
+unsigned * readMapping(char * filename, unsigned nLivingNeuron);
 void print_result(float* result, int mR, int nR, int real_mR, int real_nR, int isRowMajor);
 
-__global__ void reorderedFilters(float* images, float* filters, float* targets,
+
+__global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping,
                                        const int numImages, const int numFilters, //128, 64
                                        const int imgSizeY, const int imgSizeX, const int filterSize, const int paddingStart,
                                        const int moduleStride, //1
@@ -58,6 +61,21 @@ int main()
         float* target_data_host = readMatrix_img("../data/local/zero-out_targetInit.data", nRowOfImg, numImages); 
         Matrix mat_target(target_data_host, nRowOfImg, numImages); 
         NVMatrix targets(mat_target, true); 
+
+        unsigned* mapping_h = readMapping("../data/local/nzConnMapping.data", N_LIVING_NEURON); 
+        unsigned* mapping_d = 0;
+        cudaError_t cudaStat1;
+        cudaStat1 = cudaMalloc((void**)&mapping_d, N_LIVING_NEURON*sizeof(mapping_d[0]));
+        if (cudaStat1 != cudaSuccess) {
+            printf("Device malloc failed (mapping_d)");
+            exit(1);
+        }
+        cudaStat1 = cudaMemcpy(mapping_d, mapping_h, (size_t)(N_LIVING_NEURON*sizeof(mapping_d[0])), cudaMemcpyHostToDevice);
+        if (cudaStat1 != cudaSuccess) {
+            printf("cudaMemcpy failed (mapping_d) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
+            exit(1);
+        }
+        free(mapping_h);
         
         int imgsPerThread = 4;
         int numFilterColors = numImgColors / numGroups;      
@@ -115,21 +133,22 @@ int main()
     }
     
     //cudaFuncCachePreferNone//cudaFuncCachePreferShared//cudaFuncCachePreferL1
-    cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferNone);
-    reorderedFilters <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(),
+    cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferL1);
+    reorderedFilters <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(), mapping_d,
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, scaleTargets, scaleOutput, conv);
 
     //targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
-    //images.print(images.getNumRows(), images.getNumRows());
+    images.print(images.getNumRows(), images.getNumRows());
 
     printf("\nfinish\n");
 
+    cudaFree(mapping_d);
     cutilCheckMsg("filterActs: kernel execution failed");
 }
 
-__global__ void reorderedFilters(float* images, float* filters, float* targets,
+__global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping,
                                        const int numImages, const int numFilters, //128, 64
                                        const int imgSizeY, const int imgSizeX, const int filterSize, const int paddingStart,
                                        const int moduleStride, //1
@@ -143,9 +162,11 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
     const int nMaxConnPerNeuron = (filterSize*filterSize) * numImgColors;
     const int neuronIdx = blockIdx.x*blockDim.x + threadIdx.x;
     const int nNeuronPerFilter = numModulesX * numModulesY;//36
+    const int neuronIdx_old = mapping[neuronIdx];
 
-    float privWeight[576];//privWeight[nMaxConnPerNeuron]; 
-    float prod = 0;
+    float privWeight[576];//privWeight[nMaxConnPerNeuron]; literal because "nMaxConnPerNeuron" should be known in compile time
+    float privAct[576];//equal to Weights
+    float prod = 0.0;
 
     /*
      * (weight load) initialization Phase
@@ -156,17 +177,35 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
          privWeight[i] = filters[loc + numFilters*i];
      }
 
+
+
     /*
      * (activation) Load Phase
      */
+    int act_idx;
+    const int center = neuronIdx_old/nMaxConnPerNeuron;//center : neuronIdx_old w/o color info
+    const int upperLeft = center - ((filterSize)/2) - imgSizeX*((filterSize)/2);
+    for (int c = 0; c < numImgColors; ++c){
+        act_idx = 0;
+        for (int y = 0; y < filterSize; ++y){
+            for (int x = 0; x < filterSize; ++x){
+                privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(36) + upperLeft + y*imgSizeX + x)*numImages + 0];// [()*numImages + "n-th image"] // n:[0-127]
+                act_idx++;
+            }
+        }
+    }
 
      /*
      * Computation Phase
      */
+     for (int i = 0; i <nMaxConnPerNeuron; ++i){
+         prod += privAct[i] * privWeight[i];
+     }
 
      /*
      * Store Phase
      */
+     targets[(neuronIdx_old)*numImages + 0] = prod; //target[()*numImages + "n-th image"]
 }
 
 
@@ -189,7 +228,36 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
 
 
 
+unsigned * readMapping(char * filename, unsigned nLivingNeuron){
+    unsigned tmp;
+    FILE *fp;
+    unsigned *res;
+    int ret;
+    res = (unsigned *)malloc(nLivingNeuron*sizeof(res[0]));
+    if((fp = fopen(filename, "r+")) == NULL) {
+        printf("No such file (readMapping)\n");
+        exit(1);
+    }
 
+    for (unsigned i = 0; i < nLivingNeuron; ++i){
+        ret = fscanf(fp, "%d ", &tmp);
+        if(ret == 1){
+                res[i] = tmp;
+        }
+        else if(errno != 0) {
+                perror("scanf:");
+                break;
+        } else if(ret == EOF) {
+            //printf("finish.\n");
+            break;
+        } else {
+            printf("No match.\n");
+            exit(0);
+        }
+    }
+    fclose(fp);
+    return res;
+}
 
 
 float * readMatrix_filter(char * filename, int nRows, int nCols){
