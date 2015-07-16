@@ -29,6 +29,7 @@ int main(){
     int ret, newline;
     char dummyString [MAX_BUF];
     unsigned int cnt = 0;
+    unsigned int nzcnt = 0;
     float tmp;
     char filename_sort[40] = "nzConnSort.data";
     char filename_target[40] = "nzConnUnsort.data";//produced by target.data
@@ -89,9 +90,10 @@ int main(){
             //print it to a separate files
             fprintf(fp, "%d\n", nvec[i].nNonzeroConn);
             fprintf(fp_mapping, "%d\n", nvec[i].idx_original);
+            nzcnt++;
         } 
     }
-
+    printf("number of living Neuron: %d, %d/32 = %d, %d mod 32 = %d \n", nzcnt, nzcnt, nzcnt/32, nzcnt,nzcnt%32);
     fclose(fp);
     fclose(fp_target);
     fclose(fp_mapping);
