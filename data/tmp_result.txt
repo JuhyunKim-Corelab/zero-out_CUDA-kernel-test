@@ -1,0 +1,3 @@
+gridDim(1,72,1), blockDim(32,4,1)
+
+finish
