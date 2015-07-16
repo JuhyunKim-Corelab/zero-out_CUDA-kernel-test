@@ -167,7 +167,10 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
 
     float privWeight[576];//privWeight[nMaxConnPerNeuron]; literal because "nMaxConnPerNeuron" should be known in compile time
     float privAct[576];//equal to Weights
-    float prod = 0.0;
+    float prod[128];
+    for (int i = 0; i < numImages; ++i){
+        prod[i] =0.0;
+    }
 
     /*
      * (weight load) initialization Phase
@@ -177,8 +180,6 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
          //(neuronIdx%nNeuronPerFilter)*(numFilters*nMaxConnPerNeuron) + (neuronIdx/nNeuronPerFilter);
          privWeight[i] = filters[loc + numFilters*i];
      }
-
-
 
     /*
      * (activation) Load Phase
@@ -200,41 +201,52 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
         padding4 += (int)((imgSizeX - 1) - center/imgSizeX == i);
     }
     const int upperLeft = center - ((filterSize)/2) - imgSizeX*((filterSize)/2);
-    for (int c = 0; c < numImgColors; ++c){
-        act_idx = 0;
-        for (int y = 0; y < filterSize; ++y){
-            if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
-                for (int x = 0; x < filterSize; ++x){
-                    if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
-                        privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + 0];// [()*numImages + "n-th image"] // n:[0-127]
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~iterate for 128 img~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    for(int img_idx = 0; img_idx <numImages; img_idx++){
+        for (int c = 0; c < numImgColors; ++c){
+            act_idx = 0;
+            for (int y = 0; y < filterSize; ++y){
+                if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
+                    for (int x = 0; x < filterSize; ++x){
+                        if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
+                            privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + img_idx];// [()*numImages + "n-th image"] // n:[0-127]
+                            act_idx++;
+                        }
+                        else{
+                            privAct[c*(filterSize*filterSize) + act_idx] = 0.0;
+                            act_idx++;
+                        }     
+                    }
+                }
+                else{
+                    for (int x = 0; x < filterSize; ++x){
+                        privAct[c*(filterSize*filterSize) + act_idx] = 0.0;
                         act_idx++;
                     }
-                    else{
-                        privAct[c*(filterSize*filterSize) + act_idx] = 0.0;// [()*numImages + "n-th image"] // n:[0-127]
-                        act_idx++;
-                    }     
-                }
-            }
-            else{
-                for (int x = 0; x < filterSize; ++x){
-                    privAct[c*(filterSize*filterSize) + act_idx] = 0.0;//
-                    act_idx++;
                 }
             }
         }
+        /*
+        * Computation Phase
+        */
+        for (int i = 0; i <nMaxConnPerNeuron; ++i){
+         prod[img_idx] += privAct[i] * privWeight[i];
+        }  
     }
+    
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-     /*
-     * Computation Phase
-     */
-     for (int i = 0; i <nMaxConnPerNeuron; ++i){
-         prod += privAct[i] * privWeight[i];
-     }
-
-     /*
-     * Store Phase
-     */
-    targets[(neuronIdx_old)*numImages + 0] = prod; //target[()*numImages + "n-th image"]
+    /*
+    * Store Phase
+    */
+    for (int i = 0; i < numImages; ++i){
+        targets[(neuronIdx_old)*numImages + i] = prod[i]; //target[()*numImages + "n-th image"]
+    }
+    
 }
 
 
