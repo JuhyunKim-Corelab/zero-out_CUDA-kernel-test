@@ -8,8 +8,10 @@
 #define MAX_BUF 65536
 #define BLOCKSIZE 32
 
+//generate sorting guide(Sort file and mapping) for reorder_neuron.cpp
 //stable sort in ascending orders
-//g++ sort_neuron.cpp -o sort_neuron.exe
+
+//g++ genSortGuide.cpp -o genSortGuide.exe
 class Neuron
 {
 public:
@@ -35,7 +37,7 @@ int main(){
     float tmp;
     char filename_sort[40] = "nzConnSort.data";
     char filename_lfb[40] = "nLoadForBlocks.data";
-    char filename_target[40] = "nzConnUnsort.data";//produced by target.data
+    char filename_target[40] = "nzConnUnsort.data";//produced by target.data (count number of nz weight)
     char filename_mapping[40] = "nzConnMapping.data";
 
     if((fp_target = fopen(filename_target, "r+")) == NULL) {
