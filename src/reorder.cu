@@ -4,11 +4,13 @@
 #include <cudaconv2.cuh>
 #include <errno.h>
 
-
+#define MAX_BUFSIZE 65536
 #define IMG_SIZE 9216
 #define FILTER_SIZE 1600
 #define N_LIVING_NEURON 2027
-#define GRID_DIM_X 64 
+#define GRID_DIM_X 64
+#define BLOCK_SIZE 32
+
 // // ceil(N_LIVING_NEURON/BLOCK_SIZE) = (N_LIVING_NEURON - 1)/BLOCK_SIZE +1 = (2027 - 1)/32 + 1
 
 float * readMatrix_filter(char * filename, int nRows, int nCols);
@@ -16,7 +18,9 @@ float * readMatrix_img(char * filename, int nRows, int nCols);
 float * genMatrix_img(int m, int n, float val);
 unsigned * readMapping(char * filename, unsigned nLivingNeuron);
 unsigned * readnLoadForBlock(char * filename, unsigned nBlocks);
+int ** readLoadSeqs(char * filename, unsigned nBlocks, unsigned* nLoadForBlocks);
 void print_result(float* result, int mR, int nR, int real_mR, int real_nR, int isRowMajor);
+int numberOfDigits(int n);
 
 
 __global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping, unsigned* nLoadForBlocks,
@@ -92,7 +96,26 @@ int main()
             printf("cudaMemcpy failed (nLoadforBlocks_d) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
             exit(1);
         }
+        
+
+        
+        int **loadSeqs_h = readLoadSeqs("../data/local/loadSeqForNeuron.data", GRID_DIM_X, nLoadforBlocks_h);
+        /*
+        int* loadSeqs_d = 0;
+        cudaError_t cudaStat1;
+        cudaStat1 = cudaMalloc((void**)&loadSeqs_d, N_LIVING_NEURON*sizeof(loadSeqs_d[0]));
+        if (cudaStat1 != cudaSuccess) {
+            printf("Device malloc failed (loadSeqs_d)");
+            exit(1);
+        }
+        cudaStat1 = cudaMemcpy(loadSeqs_d, loadSeqs_h, (size_t)(N_LIVING_NEURON*sizeof(loadSeqs_d[0])), cudaMemcpyHostToDevice);
+        if (cudaStat1 != cudaSuccess) {
+            printf("cudaMemcpy failed (loadSeqs_d) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
+            exit(1);
+        }
         free(nLoadforBlocks_h);
+        free(loadSeqs_h);
+        */
         
         int imgsPerThread = 4;
         int numFilterColors = numImgColors / numGroups;      
@@ -148,6 +171,10 @@ int main()
         //printf("gridDim(%d,%d,%d), blockDim(%d,%d,%d)\n", blocks.x, blocks.y, blocks.z, threads.x, threads.y, threads.z);
         //exit(0);
     }
+
+    //for (int i = 0; i < GRID_DIM_X; ++i){
+        /* code */
+    //}
     
     //cudaFuncCachePreferNone//cudaFuncCachePreferShared//cudaFuncCachePreferL1
     cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferL1);
@@ -157,7 +184,7 @@ int main()
 
     //targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
-    targets.print(targets.getNumRows(), targets.getNumRows());
+    //targets.print(targets.getNumRows(), targets.getNumRows());
 
     printf("\nfinish\n");
 
@@ -272,7 +299,57 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
 
 
 
+int ** readLoadSeqs(char * filename, unsigned nBlocks, unsigned* nLoadForBlocks){
+    int tmp;
+    FILE *fp;
+    int **res = NULL;
+    int ret, newline;
+    //res = (int *)malloc(nBlocks*sizeof(res[0]));
+    if((fp = fopen(filename, "r+")) == NULL) {
+        printf("No such file (readLoadSeqs)\n");
+        exit(1);
+    }
+    res = (int **)malloc(N_LIVING_NEURON*sizeof(res[0]));
 
+    printf("Start\n");
+    for (unsigned neuronIdx = 0; neuronIdx < N_LIVING_NEURON; ++neuronIdx){
+        res[neuronIdx] = (int *)malloc(nLoadForBlocks[ neuronIdx/BLOCK_SIZE ]*sizeof(res[neuronIdx][0]));
+        char line[MAX_BUFSIZE];
+        char *pos = line;
+        if(fgets (line, MAX_BUFSIZE, fp) == NULL){
+            printf("fgets error!! \n");
+            exit(0);
+        }
+
+        int i;
+        for (i = 0; i < nLoadForBlocks[ neuronIdx/BLOCK_SIZE ]; ++i){
+            ret = sscanf(pos, "%d ", &tmp);
+            if(ret == 1){
+                printf("%d ", tmp);
+                res[neuronIdx][i] = tmp;
+                pos = pos + (1 + numberOfDigits(tmp));
+            }
+            else if(errno != 0) {
+                    perror("scanf:");
+                    break;
+            } else if(ret == EOF) {
+                //printf(" line finish. %d %d\n", i, nLoadForBlocks[ neuronIdx/BLOCK_SIZE ] - i);
+                break;
+            } else {
+                printf("No match.\n");
+                exit(0);
+            }
+        }
+        for (; i < nLoadForBlocks[ neuronIdx/BLOCK_SIZE ]; ++i){
+        	printf("%d ", -1);
+            res[neuronIdx][i] = -1; //for dummy load
+        }
+        printf("\n");
+    }
+
+    fclose(fp);
+    return res;
+}
 
 
 
@@ -441,4 +518,19 @@ void print_result(float* result, int mR, int nR, int real_mR, int real_nR, int i
         printf("\n");
     }
     //printf("============END==========\n");
+}
+
+int numberOfDigits(int n){
+	if(n/100000 != 0)
+		return 6;
+	else if(n/10000 != 0)
+		return 5;
+	else if(n/1000 != 0)
+		return 4;
+	else if(n/100 != 0)
+		return 3;
+	else if(n/10 != 0)
+		return 2;
+	else
+		return 1;
 }
