@@ -195,11 +195,11 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
     /*
      * (weight load) initialization Phase
      */
-     const unsigned loc = (neuronIdx%nNeuronPerFilter)*(numFilters*nMaxConnPerNeuron) + (neuronIdx/nNeuronPerFilter);//for first weight in that neuron
-     for (int i = 0; i < nMaxConnPerNeuron; ++i){
-         //(neuronIdx%nNeuronPerFilter)*(numFilters*nMaxConnPerNeuron) + (neuronIdx/nNeuronPerFilter);
-         privWeight[i] = filters[loc + numFilters*i];
-     }
+    const unsigned loc = (neuronIdx%nNeuronPerFilter)*(numFilters*nMaxConnPerNeuron) + (neuronIdx/nNeuronPerFilter);//for first weight in that neuron
+    for (int i = 0; i < nMaxConnPerNeuron; ++i){
+        //(neuronIdx%nNeuronPerFilter)*(numFilters*nMaxConnPerNeuron) + (neuronIdx/nNeuronPerFilter);
+        privWeight[i] = filters[loc + numFilters*i];
+    }
 
     /*
      * (activation) Load Phase
@@ -233,6 +233,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
                         if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
                             privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + img_idx];// [()*numImages + "n-th image"] // n:[0-127]
                             act_idx++;
+                            //c = actLoadIdx/(filterSize*filterSize), y = (actLoadIdx%(filterSize*filterSize))/filterSize, x = (actLoadIdx%(filterSize*filterSize))%filterSize
                         }
                         else{
                             privAct[c*(filterSize*filterSize) + act_idx] = 0.0;
@@ -255,7 +256,6 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
          prod[img_idx] += privAct[i] * privWeight[i];
         }  
     }
-    
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -264,7 +264,8 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
     * Store Phase
     */
     for (int i = 0; i < numImages; ++i){
-        targets[(neuronIdx_old)*numImages + i] = prod[i]; //target[()*numImages + "n-th image"]
+        targets[(neuronIdx_old)*numImages + i] = (float)nLoads;
+        //targets[(neuronIdx_old)*numImages + i] = prod[i]; //target[()*numImages + "n-th image"]
     }
     
 }
