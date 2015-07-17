@@ -161,7 +161,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
     //__shared__ float shImages[Y][X];
     const int nMaxConnPerNeuron = (filterSize*filterSize) * numImgColors;
     const int neuronIdx = blockIdx.x*blockDim.x + threadIdx.x;
-    if(neuronIdx >= N_LIVING_NEURON) return;
+    if(neuronIdx >= N_LIVING_NEURON) return; //for dead neuron of last block
     const int nNeuronPerFilter = numModulesX * numModulesY;//36
     const int neuronIdx_old = mapping[neuronIdx];
 
