@@ -139,7 +139,7 @@ int main(int argc, char** argv){
     for (int i = 0; i < nNeuronPerFilter * nMaxConnPerNeuron; ++i){
         for (int j = 0; j < nFilter; ++j){
             //printf("%f ", wm_res[j + nFilter*i]);
-            fprintf(fp_res, "%f ", wm_res[j + nFilter*i]);
+            fprintf(fp_res, "%.11f ", wm_res[j + nFilter*i]);
         }
         //printf("\n");
         fprintf(fp_res, "\n");
