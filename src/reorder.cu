@@ -8,15 +8,18 @@
 #define IMG_SIZE 9216
 #define FILTER_SIZE 1600
 #define N_LIVING_NEURON 2027
+#define GRID_DIM_X 64 
+// // ceil(N_LIVING_NEURON/BLOCK_SIZE) = (N_LIVING_NEURON - 1)/BLOCK_SIZE +1 = (2027 - 1)/32 + 1
 
 float * readMatrix_filter(char * filename, int nRows, int nCols);
 float * readMatrix_img(char * filename, int nRows, int nCols);
 float * genMatrix_img(int m, int n, float val);
 unsigned * readMapping(char * filename, unsigned nLivingNeuron);
+unsigned * readnLoadForBlock(char * filename, unsigned nBlocks);
 void print_result(float* result, int mR, int nR, int real_mR, int real_nR, int isRowMajor);
 
 
-__global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping,
+__global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping, unsigned* nLoadForBlocks,
                                        const int numImages, const int numFilters, //128, 64
                                        const int imgSizeY, const int imgSizeX, const int filterSize, const int paddingStart,
                                        const int moduleStride, //1
@@ -76,6 +79,20 @@ int main()
             exit(1);
         }
         free(mapping_h);
+
+        unsigned* nLoadforBlocks_h = readnLoadForBlock("../data/local/nLoadForBlocks.data", GRID_DIM_X);
+        unsigned* nLoadforBlocks_d = 0;
+        cudaStat1 = cudaMalloc((void**)&nLoadforBlocks_d, GRID_DIM_X*sizeof(nLoadforBlocks_d[0]));
+        if (cudaStat1 != cudaSuccess) {
+            printf("Device malloc failed (nLoadforBlocks_d)");
+            exit(1);
+        }
+        cudaStat1 = cudaMemcpy(nLoadforBlocks_d, nLoadforBlocks_h, (size_t)(GRID_DIM_X*sizeof(nLoadforBlocks_d[0])), cudaMemcpyHostToDevice);
+        if (cudaStat1 != cudaSuccess) {
+            printf("cudaMemcpy failed (nLoadforBlocks_d) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
+            exit(1);
+        }
+        free(nLoadforBlocks_h);
         
         int imgsPerThread = 4;
         int numFilterColors = numImgColors / numGroups;      
@@ -105,7 +122,7 @@ int main()
         assert(filters.isContiguous());
         assert(targets.isContiguous());
     }
-    dim3 blocks (64, 1, 1); // ceil(2027/32) = (2027 - 1)/32 + 1
+    dim3 blocks (GRID_DIM_X, 1, 1); // ceil(2027/32) = (2027 - 1)/32 + 1
     dim3 threads(32, 1, 1);
     bool checkImgBounds = numImages % (32*imgsPerThread) != 0;
     
@@ -134,7 +151,7 @@ int main()
     
     //cudaFuncCachePreferNone//cudaFuncCachePreferShared//cudaFuncCachePreferL1
     cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferL1);
-    reorderedFilters <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(), mapping_d,
+    reorderedFilters <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(), mapping_d, nLoadforBlocks_d,
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, scaleTargets, scaleOutput, conv);
 
@@ -148,7 +165,7 @@ int main()
     cutilCheckMsg("filterActs: kernel execution failed");
 }
 
-__global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping,
+__global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping, unsigned* nLoadForBlocks,
                                        const int numImages, const int numFilters, //128, 64
                                        const int imgSizeY, const int imgSizeX, const int filterSize, const int paddingStart,
                                        const int moduleStride, //1
@@ -171,6 +188,9 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
     for (int i = 0; i < numImages; ++i){
         prod[i] =0.0;
     }
+
+    __shared__ unsigned nLoads;
+    nLoads = nLoadForBlocks[ blockIdx.x ]; //what happen if all thread in a block load same memory location?
 
     /*
      * (weight load) initialization Phase
@@ -255,19 +275,36 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
 
 
 
+unsigned * readnLoadForBlock(char * filename, unsigned nBlocks){
+    unsigned tmp;
+    FILE *fp;
+    unsigned *res;
+    int ret;
+    res = (unsigned *)malloc(nBlocks*sizeof(res[0]));
+    if((fp = fopen(filename, "r+")) == NULL) {
+        printf("No such file (readnLoadForBlock)\n");
+        exit(1);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    for (unsigned i = 0; i < nBlocks; ++i){
+        ret = fscanf(fp, "%d ", &tmp);
+        if(ret == 1){
+                res[i] = tmp;
+        }
+        else if(errno != 0) {
+                perror("scanf:");
+                break;
+        } else if(ret == EOF) {
+            //printf("finish.\n");
+            break;
+        } else {
+            printf("No match.\n");
+            exit(0);
+        }
+    }
+    fclose(fp);
+    return res;
+}
 
 unsigned * readMapping(char * filename, unsigned nLivingNeuron){
     unsigned tmp;

@@ -5,6 +5,6 @@ CUDA_CONVNET_DIR=/home/seungbin/npu/convnet
 
 g++ -fPIC -Wl,-no-undefined  -m64 -o ../obj/reorder.exe ../obj/reorder.o $CUDA_CONVNET_DIR/cuda-convnet-read-only/obj/x86_64/release/src/nvmatrix/nvmatrix.cu.o $CUDA_CONVNET_DIR/cuda-convnet-read-only/obj/x86_64/release/src/common/matrix.cpp.o $CUDA_CONVNET_DIR/cuda-convnet-read-only/obj/x86_64/release/src/nvmatrix/nvmatrix_kernels.cu.o  -lpthread -L/usr/lib/atlas-base -L/usr/local/cuda/lib64 -L/home/seungbin/NVIDIA_GPU_Computing_SDK/C/lib -L/home/seungbin/NVIDIA_GPU_Computing_SDK/shared/lib -lcblas -lpython2.7 -L/usr/local/cuda/lib64 -L/home/seungbin/NVIDIA_GPU_Computing_SDK/C/lib -L/home/seungbin/NVIDIA_GPU_Computing_SDK/C/common/lib/linux -L/home/seungbin/NVIDIA_GPU_Computing_SDK/shared//lib -lcudart -lcublas -lcutil_x86_64 -lshrutil_x86_64
 
-./../obj/reorder.exe > ../data/tmp_result.txt
+./../obj/reorder.exe > ../data/tmp_result.data
 #diff result.txt target.data 
 #rm result.txt
