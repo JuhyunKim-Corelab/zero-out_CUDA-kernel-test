@@ -23,7 +23,8 @@ void print_result(float* result, int mR, int nR, int real_mR, int real_nR, int i
 int numberOfDigits(int n);
 
 
-__global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping, unsigned* nLoadForBlocks,
+__global__ void reorderedFilters(float* images, float* filters, float* targets,
+									   unsigned* mapping, unsigned* nLoadForBlocks, int** loadSeqs,
                                        const int numImages, const int numFilters, //128, 64
                                        const int imgSizeY, const int imgSizeX, const int filterSize, const int paddingStart,
                                        const int moduleStride, //1
@@ -97,25 +98,54 @@ int main()
             exit(1);
         }
         
-
-        
         int **loadSeqs_h = readLoadSeqs("../data/local/loadSeqForNeuron.data", GRID_DIM_X, nLoadforBlocks_h);
-        /*
-        int* loadSeqs_d = 0;
-        cudaError_t cudaStat1;
+        int **loadSeqs_d = 0;
         cudaStat1 = cudaMalloc((void**)&loadSeqs_d, N_LIVING_NEURON*sizeof(loadSeqs_d[0]));
         if (cudaStat1 != cudaSuccess) {
             printf("Device malloc failed (loadSeqs_d)");
             exit(1);
         }
-        cudaStat1 = cudaMemcpy(loadSeqs_d, loadSeqs_h, (size_t)(N_LIVING_NEURON*sizeof(loadSeqs_d[0])), cudaMemcpyHostToDevice);
+        int** loadSeqs_support = (int **)malloc(sizeof(int*)*N_LIVING_NEURON);
+        cudaStat1 = cudaMemcpy(loadSeqs_support, loadSeqs_d, N_LIVING_NEURON*sizeof(int*), cudaMemcpyDeviceToHost);
         if (cudaStat1 != cudaSuccess) {
-            printf("cudaMemcpy failed (loadSeqs_d) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
+            printf("cudaMemcpy failed (loadSeqs_support) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
             exit(1);
+        }
+        for (unsigned neuronIdx = 0; neuronIdx < N_LIVING_NEURON; ++neuronIdx){
+        	cudaStat1 = cudaMalloc((void**) &loadSeqs_support[neuronIdx], (nLoadforBlocks_h[ neuronIdx/BLOCK_SIZE ])*sizeof(int));
+	        if (cudaStat1 != cudaSuccess) {
+	            printf("Device malloc failed (loadSeqs_support[%d])", neuronIdx);
+	            exit(1);
+	        }
+	        cudaStat1 = cudaMemcpy(loadSeqs_support[neuronIdx], loadSeqs_h[neuronIdx],
+        					(size_t)((nLoadforBlocks_h[ neuronIdx/BLOCK_SIZE ])*sizeof(int)), cudaMemcpyHostToDevice);
+	        if (cudaStat1 != cudaSuccess) {
+	            printf("cudaMemcpy failed (loadSeqs_d) %d %d", cudaStat1, neuronIdx );
+	            exit(1);
+	        }
         }
         free(nLoadforBlocks_h);
         free(loadSeqs_h);
-        */
+
+        for (int i = 0; i < N_LIVING_NEURON; ++i){
+        	cudaStat1 = cudaMemcpy(loadSeqs_d+i, &(loadSeqs_support[i]), 1*sizeof(int*), cudaMemcpyHostToDevice);
+	        if (cudaStat1 != cudaSuccess) {
+	            printf("cudaMemcpy failed (!!!!!) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
+	            exit(1);
+	        }
+        }
+        
+        int **tmp_h = (int **)malloc(N_LIVING_NEURON*sizeof(int*));
+        cudaStat1 = cudaMemcpy(tmp_h, loadSeqs_d, N_LIVING_NEURON*sizeof(int*), cudaMemcpyDeviceToHost);
+        if (cudaStat1 != cudaSuccess) {
+            printf("cudaMemcpy failed (~~~~) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
+            exit(1);
+        }
+        for (int i = 0; i < 2; ++i){
+        	printf("%d: %f == %f\n", i, (float)((long)(loadSeqs_support[i])), (float)((long)tmp_h[i]));
+        }
+        //exit(0);
+
         
         int imgsPerThread = 4;
         int numFilterColors = numImgColors / numGroups;      
@@ -178,13 +208,14 @@ int main()
     
     //cudaFuncCachePreferNone//cudaFuncCachePreferShared//cudaFuncCachePreferL1
     cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferL1);
-    reorderedFilters <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(), mapping_d, nLoadforBlocks_d,
+    reorderedFilters <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(),
+    	mapping_d, nLoadforBlocks_d, loadSeqs_d,
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, scaleTargets, scaleOutput, conv);
 
     //targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
-    //targets.print(targets.getNumRows(), targets.getNumRows());
+    targets.print(targets.getNumRows(), targets.getNumRows());
 
     printf("\nfinish\n");
 
@@ -192,7 +223,8 @@ int main()
     cutilCheckMsg("filterActs: kernel execution failed");
 }
 
-__global__ void reorderedFilters(float* images, float* filters, float* targets, unsigned* mapping, unsigned* nLoadForBlocks,
+__global__ void reorderedFilters(float* images, float* filters, float* targets,
+									   unsigned* mapping, unsigned* nLoadForBlocks, int** loadSeqs,
                                        const int numImages, const int numFilters, //128, 64
                                        const int imgSizeY, const int imgSizeX, const int filterSize, const int paddingStart,
                                        const int moduleStride, //1
@@ -208,6 +240,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
     if(neuronIdx >= N_LIVING_NEURON) return; //for dead neuron of last block
     const int nNeuronPerFilter = numModulesX * numModulesY;//36
     const int neuronIdx_old = mapping[neuronIdx];
+    int* loadSeqs_thisNeuron = loadSeqs[2];//loadSeqs[neuronIdx];
 
     float privWeight[576];//privWeight[nMaxConnPerNeuron]; literal because "nMaxConnPerNeuron" should be known in compile time
     float privAct[576];//equal to Weights
@@ -291,7 +324,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets, 
     * Store Phase
     */
     for (int i = 0; i < numImages; ++i){
-        targets[(neuronIdx_old)*numImages + i] = (float)nLoads;
+        targets[(neuronIdx_old)*numImages + i] = loadSeqs_thisNeuron[317];//((float)((long)loadSeqs));//(float)(*loadSeqs_thisNeuron);
         //targets[(neuronIdx_old)*numImages + i] = prod[i]; //target[()*numImages + "n-th image"]
     }
     
@@ -311,7 +344,6 @@ int ** readLoadSeqs(char * filename, unsigned nBlocks, unsigned* nLoadForBlocks)
     }
     res = (int **)malloc(N_LIVING_NEURON*sizeof(res[0]));
 
-    printf("Start\n");
     for (unsigned neuronIdx = 0; neuronIdx < N_LIVING_NEURON; ++neuronIdx){
         res[neuronIdx] = (int *)malloc(nLoadForBlocks[ neuronIdx/BLOCK_SIZE ]*sizeof(res[neuronIdx][0]));
         char line[MAX_BUFSIZE];
@@ -325,7 +357,7 @@ int ** readLoadSeqs(char * filename, unsigned nBlocks, unsigned* nLoadForBlocks)
         for (i = 0; i < nLoadForBlocks[ neuronIdx/BLOCK_SIZE ]; ++i){
             ret = sscanf(pos, "%d ", &tmp);
             if(ret == 1){
-                printf("%d ", tmp);
+                //printf("%d ", tmp);
                 res[neuronIdx][i] = tmp;
                 pos = pos + (1 + numberOfDigits(tmp));
             }
@@ -341,10 +373,10 @@ int ** readLoadSeqs(char * filename, unsigned nBlocks, unsigned* nLoadForBlocks)
             }
         }
         for (; i < nLoadForBlocks[ neuronIdx/BLOCK_SIZE ]; ++i){
-        	printf("%d ", -1);
+        	//printf("%d ", -1);
             res[neuronIdx][i] = -1; //for dummy load
         }
-        printf("\n");
+        //printf("\n");
     }
 
     fclose(fp);
