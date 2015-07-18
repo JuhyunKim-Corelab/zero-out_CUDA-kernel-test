@@ -123,29 +123,14 @@ int main()
 	            printf("cudaMemcpy failed (loadSeqs_d) %d %d", cudaStat1, neuronIdx );
 	            exit(1);
 	        }
-        }
-        free(nLoadforBlocks_h);
-        free(loadSeqs_h);
-
-        for (int i = 0; i < N_LIVING_NEURON; ++i){
-        	cudaStat1 = cudaMemcpy(loadSeqs_d+i, &(loadSeqs_support[i]), 1*sizeof(int*), cudaMemcpyHostToDevice);
+	        cudaStat1 = cudaMemcpy(loadSeqs_d+neuronIdx, &(loadSeqs_support[neuronIdx]), 1*sizeof(int*), cudaMemcpyHostToDevice);
 	        if (cudaStat1 != cudaSuccess) {
 	            printf("cudaMemcpy failed (!!!!!) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
 	            exit(1);
 	        }
         }
-        
-        int **tmp_h = (int **)malloc(N_LIVING_NEURON*sizeof(int*));
-        cudaStat1 = cudaMemcpy(tmp_h, loadSeqs_d, N_LIVING_NEURON*sizeof(int*), cudaMemcpyDeviceToHost);
-        if (cudaStat1 != cudaSuccess) {
-            printf("cudaMemcpy failed (~~~~) %d  cudaErrorInvalidValue :%d", cudaStat1, cudaErrorInvalidValue );
-            exit(1);
-        }
-        for (int i = 0; i < 2; ++i){
-        	printf("%d: %f == %f\n", i, (float)((long)(loadSeqs_support[i])), (float)((long)tmp_h[i]));
-        }
-        //exit(0);
-
+        free(nLoadforBlocks_h);
+        free(loadSeqs_h);
         
         int imgsPerThread = 4;
         int numFilterColors = numImgColors / numGroups;      
@@ -240,7 +225,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
     if(neuronIdx >= N_LIVING_NEURON) return; //for dead neuron of last block
     const int nNeuronPerFilter = numModulesX * numModulesY;//36
     const int neuronIdx_old = mapping[neuronIdx];
-    int* loadSeqs_thisNeuron = loadSeqs[2];//loadSeqs[neuronIdx];
+    int* loadSeqs_thisNeuron = loadSeqs[neuronIdx];//loadSeqs[neuronIdx];
 
     float privWeight[576];//privWeight[nMaxConnPerNeuron]; literal because "nMaxConnPerNeuron" should be known in compile time
     float privAct[576];//equal to Weights
@@ -285,30 +270,27 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
     //~~~~~~~~~~~~~~~iterate for 128 img~~~~~~~~~~~~~~~~~~~~~~
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     for(int img_idx = 0; img_idx <numImages; img_idx++){
-        for (int c = 0; c < numImgColors; ++c){
-            act_idx = 0;
-            for (int y = 0; y < filterSize; ++y){
-                if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
-                    for (int x = 0; x < filterSize; ++x){
-                        if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
-                            privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + img_idx];// [()*numImages + "n-th image"] // n:[0-127]
-                            act_idx++;
-                            //c = actLoadIdx/(filterSize*filterSize), y = (actLoadIdx%(filterSize*filterSize))/filterSize, x = (actLoadIdx%(filterSize*filterSize))%filterSize
-                        }
-                        else{
-                            privAct[c*(filterSize*filterSize) + act_idx] = 0.0;
-                            act_idx++;
-                        }     
-                    }
-                }
-                else{
-                    for (int x = 0; x < filterSize; ++x){
-                        privAct[c*(filterSize*filterSize) + act_idx] = 0.0;
-                        act_idx++;
-                    }
-                }
-            }
-        }
+    	for (int i = 0; i < nLoads; ++i){ //loadSeqs_thisNeuron[i]: this will iterate actually.
+    		int actLoadIdx = loadSeqs_thisNeuron[i];
+    		if(actLoadIdx == -1) break;
+    		int c = actLoadIdx/(filterSize*filterSize); //color
+    		int y = (actLoadIdx%(filterSize*filterSize))/filterSize; // y idx in 3x3 filter
+    		int x = (actLoadIdx%(filterSize*filterSize))%filterSize; // x idx in 3x3 filter
+    		if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
+    			if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
+	    			privAct[c*(filterSize*filterSize) + (y*filterSize + x)] =
+	    				images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + img_idx];
+	    				// [()*numImages + "n-th image"] // n:[0-127]
+    			}
+    			else{
+    				privAct[c*(filterSize*filterSize) + (y*filterSize + x)] = 0.0;	
+    			}
+    		}
+    		else{
+    			privAct[c*(filterSize*filterSize) + (y*filterSize + x)] = 0.0;
+    		}
+    	}
+
         /*
         * Computation Phase
         */
@@ -324,7 +306,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
     * Store Phase
     */
     for (int i = 0; i < numImages; ++i){
-        targets[(neuronIdx_old)*numImages + i] = loadSeqs_thisNeuron[317];//((float)((long)loadSeqs));//(float)(*loadSeqs_thisNeuron);
+        targets[(neuronIdx_old)*numImages + i] = prod[i];//((float)((long)loadSeqs));//(float)(*loadSeqs_thisNeuron);
         //targets[(neuronIdx_old)*numImages + i] = prod[i]; //target[()*numImages + "n-th image"]
     }
     
@@ -566,3 +548,45 @@ int numberOfDigits(int n){
 	else
 		return 1;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+//grave yard
+/*
+
+			for (int c = 0; c < numImgColors; ++c){
+            act_idx = 0;
+            for (int y = 0; y < filterSize; ++y){
+                if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
+                    for (int x = 0; x < filterSize; ++x){
+                        if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
+                            privAct[c*(filterSize*filterSize) + act_idx] = images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + img_idx];// [()*numImages + "n-th image"] // n:[0-127]
+                            act_idx++;
+                            //c = actLoadIdx/(filterSize*filterSize), y = (actLoadIdx%(filterSize*filterSize))/filterSize, x = (actLoadIdx%(filterSize*filterSize))%filterSize
+                        }
+                        else{
+                            privAct[c*(filterSize*filterSize) + act_idx] = 0.0;
+                            act_idx++;
+                        }     
+                    }
+                }
+                else{
+                    for (int x = 0; x < filterSize; ++x){
+                        privAct[c*(filterSize*filterSize) + act_idx] = 0.0;
+                        act_idx++;
+                    }
+                }
+            }
+        }
+
+
+*/
