@@ -4,6 +4,7 @@
 #include <cudaconv2.cuh>
 #include <errno.h>
 #include <math.h>       /* isnan, sqrt */
+#include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
 
 #define MAX_BUFSIZE 65536
 #define IMG_SIZE 9216
@@ -190,6 +191,9 @@ int main()
         //printf("gridDim(%d,%d,%d), blockDim(%d,%d,%d)\n", blocks.x, blocks.y, blocks.z, threads.x, threads.y, threads.z);
         //exit(0);
     }
+
+    clock_t clockTime;
+    clockTime = clock(); //#########Evaluating Start!!!!
     
     //cudaFuncCachePreferNone//cudaFuncCachePreferShared//cudaFuncCachePreferL1
     cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferL1);
@@ -197,6 +201,9 @@ int main()
     	mapping_d, nLoadforBlocks_d, loadSeqs_d,
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, scaleTargets, scaleOutput, conv);
+
+    clockTime = clock() - clockTime;//#########Evaluating End!!!!
+    printf ("#### Kernel Execution time: %d clicks (%f seconds) ####\n\n",clockTime,((float)clockTime)/CLOCKS_PER_SEC);
 
     targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
