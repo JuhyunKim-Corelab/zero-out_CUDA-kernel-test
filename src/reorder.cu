@@ -72,6 +72,9 @@ int main()
         Matrix mat_target(target_data_host, nRowOfImg, numImages); 
         NVMatrix targets(mat_target, true); 
 
+        //################# FOR REORDER ################
+        //####INPUT VARIBALE: [N_LIVING_NEURON, GRID_DIM_X] should be known at compile time
+        //####INPUT FILES: [nzConnMapping.data, nLoadForBlocks.data, loadSeqForNeuron.data]
         unsigned* mapping_h = readMapping("../data/local/nzConnMapping.data", N_LIVING_NEURON); 
         unsigned* mapping_d = 0;
         cudaError_t cudaStat1;
@@ -133,6 +136,7 @@ int main()
         }
         free(nLoadforBlocks_h);
         free(loadSeqs_h);
+        //##################################################
         
         int imgsPerThread = 4;
         int numFilterColors = numImgColors / numGroups;      
