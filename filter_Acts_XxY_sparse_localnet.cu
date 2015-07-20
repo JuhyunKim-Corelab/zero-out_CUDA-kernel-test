@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <cudaconv2.cuh>
 #include <errno.h>
+#include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
 
 
 #define IMG_SIZE 9216
@@ -313,10 +314,16 @@ int main()
         //exit(0);
     }
 
+    clock_t clockTime;
+    clockTime = clock(); //#########Evaluating Start!!!!
+
     cudaFuncSetCacheConfig(filterActs_YxX_sparse< 4, 32, 4, 8, 2, false, false >, cudaFuncCachePreferShared);
     filterActs_YxX_sparse < 4, 32, 4, 8, 2, false, false > <<<blocks, threads>>>(images.getDevData(), filters.getDevData(), targets.getDevData(),
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
+    
+    clockTime = clock() - clockTime;//#########Evaluating End!!!!
+    printf ("#### Kernel Execution time: %d clicks (%f seconds) ####\n\n",clockTime,((float)clockTime)/CLOCKS_PER_SEC);
 
     targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
