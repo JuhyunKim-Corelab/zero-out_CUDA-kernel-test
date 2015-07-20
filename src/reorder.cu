@@ -159,6 +159,9 @@ int main()
         assert(!targets.isTrans());
         assert(filters.isContiguous());
         assert(targets.isContiguous());
+
+        assert(imgSizeX == imgSizeY);
+        assert(numGroups == 1);
     }
     dim3 blocks (GRID_DIM_X, 1, 1); // ceil(2027/32) = (2027 - 1)/32 + 1
     dim3 threads(32, 1, 1);
@@ -186,10 +189,6 @@ int main()
         //printf("gridDim(%d,%d,%d), blockDim(%d,%d,%d)\n", blocks.x, blocks.y, blocks.z, threads.x, threads.y, threads.z);
         //exit(0);
     }
-
-    //for (int i = 0; i < GRID_DIM_X; ++i){
-        /* code */
-    //}
     
     //cudaFuncCachePreferNone//cudaFuncCachePreferShared//cudaFuncCachePreferL1
     cudaFuncSetCacheConfig(reorderedFilters, cudaFuncCachePreferL1);
@@ -203,7 +202,6 @@ int main()
     targets.print(targets.getNumRows(), targets.getNumRows());
 
     printf("\nfinish\n");
-
     cudaFree(mapping_d);
     cutilCheckMsg("filterActs: kernel execution failed");
 }
