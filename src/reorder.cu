@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <cudaconv2.cuh>
 #include <errno.h>
+#include <math.h>       /* isnan, sqrt */
 
 #define MAX_BUFSIZE 65536
 #define IMG_SIZE 9216
@@ -197,9 +198,9 @@ int main()
         numImages, numFilters, imgSizeY, imgSizeX, filterSize, paddingStart, moduleStride, numModulesY,
         numModulesX, imgStride, numImgColors, scaleTargets, scaleOutput, conv);
 
-    //targets.print(targets.getNumRows(), targets.getNumRows());
-    //filters.print(filters.getNumRows(), filters.getNumRows());
     targets.print(targets.getNumRows(), targets.getNumRows());
+    //filters.print(filters.getNumRows(), filters.getNumRows());
+    //targets.print(targets.getNumRows(), targets.getNumRows());
 
     printf("\nfinish\n");
     cudaFree(mapping_d);
@@ -228,6 +229,9 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
     float privWeight[576];//privWeight[nMaxConnPerNeuron]; literal because "nMaxConnPerNeuron" should be known in compile time
     float privAct[576];//equal to Weights
     float prod[128];
+    for (int i = 0; i < 576; ++i){ //is this really necessary???
+        privAct[i] = 0.0;
+    }
     for (int i = 0; i < numImages; ++i){
         prod[i] =0.0;
     }
@@ -304,6 +308,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
     * Store Phase
     */
     for (int i = 0; i < numImages; ++i){
+        //if(isnan(prod[i]) prod[i] = 99.99;
         targets[(neuronIdx_old)*numImages + i] = prod[i];//((float)((long)loadSeqs));//(float)(*loadSeqs_thisNeuron);
         //targets[(neuronIdx_old)*numImages + i] = prod[i]; //target[()*numImages + "n-th image"]
     }
