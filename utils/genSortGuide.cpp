@@ -5,6 +5,7 @@
 #include <algorithm>    // std::stable_sort
 #include <vector>       // std::vector
 #include <string>
+#include <string.h>
 #define MAX_BUF 65536
 #define BLOCKSIZE 32
 
@@ -12,6 +13,8 @@
 //stable sort in ascending orders
 
 //g++ genSortGuide.cpp -o genSortGuide.exe
+//usage: ./genSortGuide.exe [input filename]
+
 class Neuron
 {
 public:
@@ -22,7 +25,7 @@ public:
 
 bool compare_nzConn (Neuron i, Neuron j);
 
-int main(){
+int main(int argc, char** argv){
 
 
     std::vector<Neuron> nvec;
@@ -35,10 +38,19 @@ int main(){
     unsigned int cnt = 0;
     unsigned int nzcnt = 0;
     float tmp;
-    char filename_sort[40] = "nzConnSort.data";
-    char filename_lfb[40] = "nLoadForBlocks.data";
-    char filename_target[40] = "nzConnUnsort.data";//produced by target.data (count number of nz weight)
-    char filename_mapping[40] = "nzConnMapping.data";
+    char filename_sort[80] = "nzConnSort.data";
+    char filename_lfb[80] = "nLoadForBlocks.data";
+    char filename_target[80] = "nzConnUnsort.data";//produced by target.data (count number of nz weight)
+    char filename_mapping[80] = "nzConnMapping.data";
+    if(argc>1){
+        char tmpstr[80] = "tmp/nzConnSort.";
+        char tmpstr2[80] = "tmp/nLoadForBlocks.";
+        char tmpstr3[80] = "tmp/mapping.";
+        strcpy(filename_target, argv[1]);
+        strcat(tmpstr, argv[1]); strcpy(filename_sort, tmpstr);
+        strcat(tmpstr2, argv[1]); strcpy(filename_lfb, tmpstr2);
+        strcat(tmpstr3, argv[1]); strcpy(filename_mapping, tmpstr3);
+    }
 
     if((fp_target = fopen(filename_target, "r+")) == NULL) {
         printf("file open Error1\n");
