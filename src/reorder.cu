@@ -213,7 +213,7 @@ int main()
     //filters.print(filters.getNumRows(), filters.getNumRows());
     //targets.print(targets.getNumRows(), targets.getNumRows());
 
-    printf("\nfinish\n");
+    //printf("\nfinish\n");
     cudaFree(mapping_d);
     cutilCheckMsg("filterActs: kernel execution failed");
 }
@@ -445,7 +445,6 @@ unsigned * readMapping(char * filename, unsigned nLivingNeuron){
 
 
 float * readMatrix_filter(char * filename, int nRows, int nCols){
-
     float tmp;
     FILE *fp;
     float *full;
@@ -458,11 +457,11 @@ float * readMatrix_filter(char * filename, int nRows, int nCols){
 
     for (int i = 0; i < nRows; ++i)
     {
-        for (int j = 0; j < nRows; ++j)
+        for (int j = 0; j < nCols; ++j)
         {
             int ret = fscanf(fp, "%f ", &tmp);
             if(ret == 1){
-                full[i*nRows + j] = tmp;
+                full[i*nCols + j] = tmp;
                 //printf("%.15f\n", tmp);
             }
             else if(errno != 0) {
