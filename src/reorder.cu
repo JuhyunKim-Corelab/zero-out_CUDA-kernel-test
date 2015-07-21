@@ -209,7 +209,7 @@ int main()
     clockTime = clock() - clockTime;//#########Evaluating End!!!!
     printf ("#### Kernel Execution time: %ld clicks (%f seconds) ####\n\n",clockTime,((float)clockTime)/CLOCKS_PER_SEC);
 
-    targets.print(targets.getNumRows(), targets.getNumRows());
+    //targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
     //targets.print(targets.getNumRows(), targets.getNumRows());
 
