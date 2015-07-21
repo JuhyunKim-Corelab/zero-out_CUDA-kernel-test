@@ -77,23 +77,18 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
     const int shFilterLoadY = tidx / (B_Y * filtersPerThread);
     const int shFilterLoadX = tidx % (B_Y * filtersPerThread);
     const int myImgIdx = blockIdx.x * B_X * imgsPerThread + threadIdx.x;
-    unsigned int last_idx;
-    unsigned int shift_idx = blockFilterIdx + shFilterLoadY * numFilters + shFilterLoadX;
+    unsigned int last_idx_filter;
+    unsigned int shift_idx_filter = blockFilterIdx + shFilterLoadY * numFilters + shFilterLoadX;
     if (!conv) {
-        shift_idx += moduleIdx * numFilterColors * filterPixels * numFilters;
+        shift_idx_filter += moduleIdx * numFilterColors * filterPixels * numFilters;
     }
-
-    images += blockColorIdx * imgPixels * imgStride + myImgIdx;
-    /*
-    filters +=blockFilterIdx
-            + shFilterLoadY * numFilters + shFilterLoadX;
-    if (!conv) {
-        filters += moduleIdx * numFilterColors * filterPixels * numFilters;
-    }
-    */
-    targets += moduleIdx * numImages
-            + (blockFilterIdx + threadIdx.y) * numImages * numModules
-            + myImgIdx;
+    unsigned int last_idx_img;
+    unsigned int shift2_idx_img;
+    unsigned int shift_idx_img = blockColorIdx * imgPixels * imgStride + myImgIdx;
+    unsigned int shift_idx_target =  moduleIdx * numImages
+                                    + (blockFilterIdx + threadIdx.y) * numImages * numModules
+                                    + myImgIdx;
+    unsigned int last_idx_target;
 
     float prod[filtersPerThread][imgsPerThread];
     #pragma unroll
@@ -118,31 +113,8 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                     if (p + p2 + shFilterLoadY < filterPixels) {
                         #pragma unroll
                         for (int c = 0; c < colorCache; c++) {
-                            last_idx = shift_idx + (((oc+c) * filterPixels /*25*/ + p + p2) * numFilters);
-                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx]; 
-                            //shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[((oc+c) * filterPixels /*25*/ + p + p2) * numFilters /*64*/]; 
-                            
-                            /*
-                            if(filters[last_idx] == 0.0)
-                                filters[last_idx] = blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y + 0.001;
-                            //else if(filters[last_idx] < 0.0)
-
-                            else{
-                                if((((int)filters[last_idx])%10 == threadIdx.y)
-                                    && ( (((int)filters[last_idx])/10)%100 == threadIdx.x))
-                                    filters[last_idx] = filters[last_idx] + 0.001;
-                                    //filters[last_idx] = blockIdx.y*1000 + ( ((int)filters[last_idx])%1000);   
-                                else{
-                                    filters[last_idx] = filters[last_idx] + 0.001;
-                                    float fr = filters[last_idx] - (float)((int)filters[last_idx]);
-                                    filters[last_idx] = (-1.0)*(blockIdx.y*1000 + threadIdx.x*10 + threadIdx.y + fr);
-                                }
-                            }
-
-                            // (threadIdx.x)(threadIdx.y).(blockIdx.x)(blockIdx.y)
-                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = 0; 
-                            */
-                            
+                            last_idx_filter = shift_idx_filter + (((oc+c) * filterPixels /*25*/ + p + p2) * numFilters);
+                            shFilters[shFilterLoadY + p2 + c * B_Y][shFilterLoadX] = filters[last_idx_filter]; 
                         }
                     } else {
                         #pragma unroll
@@ -161,13 +133,14 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
                 const int x = imgLoadModPosX + pixIdx % filterSize;
                 const int y = imgLoadModPosY + pixIdx / filterSize;
                 if (y >= 0 && y < imgSizeY && x >= 0 && x < imgSizeX) {
-                    float* m = &images[imgStride * (oc * imgPixels + y * imgSizeX + x)];
+                    shift2_idx_img = shift_idx_img + (imgStride * (oc * imgPixels + y * imgSizeX + x));
                     #pragma unroll
                     for (int i = 0; i < imgsPerThread; i++) {
                         if (!checkImgBounds || myImgIdx + i * B_X < numImages) {
                             #pragma unroll
                             for (int c = 0; c < colorCache; c++) {
-                                shImages[threadIdx.y + c * B_Y][threadIdx.x + i * B_X] = m[c * imgStride * imgPixels + i * B_X];
+                                last_idx_img = shift2_idx_img + (c * imgStride * imgPixels + i * B_X);
+                                shImages[threadIdx.y + c * B_Y][threadIdx.x + i * B_X] = images[last_idx_img];
                             }
                         } else {
                             #pragma unroll
@@ -207,7 +180,8 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
             if (!checkImgBounds || myImgIdx + g * B_X < numImages) {
                 #pragma unroll
                 for (int f = 0; f < filtersPerThread; f++) {
-                    targets[g * B_X + f * B_Y * numImages * numModules] = scaleTargets * targets[g * B_X + f * B_Y * numImages * numModules] + scaleOutputs * prod[f][g];
+                    last_idx_target = shift_idx_target + (g * B_X + f * B_Y * numImages * numModules);
+                    targets[last_idx_target] = scaleTargets * targets[g * B_X + f * B_Y * numImages * numModules] + scaleOutputs * prod[f][g];
                 }
             }
         }
@@ -217,7 +191,8 @@ __global__ void filterActs_YxX_sparse(float* images, float* filters, float* targ
             if (!checkImgBounds || myImgIdx + g * B_X < numImages) {
                 #pragma unroll
                 for (int f = 0; f < filtersPerThread; f++) {
-                    targets[g * B_X + f * B_Y * numImages * numModules] = scaleOutputs * prod[f][g];
+                    last_idx_target = shift_idx_target + (g * B_X + f * B_Y * numImages * numModules);
+                    targets[last_idx_target] = scaleOutputs * prod[f][g];
                 }
             }
         }
