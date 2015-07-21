@@ -6,12 +6,13 @@
 #include <algorithm>    // std::stable_sort
 #include <vector>       // std::vector
 #include <string>
+#include <string.h>
 #define MAX_BUF 65536
 
 //
 //take mapping file as an input, and reorder w matrix of each neurons
 //g++ reorder_neuron.cpp -o reorder_neuron.exe
-// usage: ./reorder_neuron.exe [nMaxConnPerNeuron] [nNeuronPerFilter] [nFilter]
+// usage: ./reorder_neuron.exe [nMaxConnPerNeuron] [nNeuronPerFilter] [nFilter] [filter file] [mapping file]
 // e.g. : ./reorder_neuron.exe 576 36 64
 class NeuronWmatrix
 {
@@ -23,7 +24,7 @@ public:
 
 int main(int argc, char** argv){
 
-    assert(argc == 4 && "3 arguments should be provided !!\n");
+    assert(argc == 6 && "5 arguments should be provided !!\n");
     unsigned nMaxConnPerNeuron = atoi(argv[1]);//576
     unsigned nNeuronPerFilter = atoi(argv[2]);//36
     unsigned nFilter = atoi(argv[3]);//64
@@ -34,6 +35,15 @@ int main(int argc, char** argv){
     char filename_mapping[40] = "nzConnMapping.data";
     char filename_wmatrix[40] = "zero-out_filter.data";
     char filename_res[40] = "zero-out_filter.reordered.data";
+    if(argc==6){
+        strcpy(filename_wmatrix, argv[4]);
+        strcpy(filename_mapping, argv[5]);
+        int len= (int)strlen(argv[4]);
+        char tmpstr[80];
+        char tmpstr2[80] = "reordered.data";
+        strncpy(tmpstr, argv[4], len-4);
+        strcat(tmpstr, tmpstr2); strcpy(filename_res, tmpstr);
+    }
     FILE *fp_mapping;
     FILE *fp_wmatrix;
     FILE *fp_res;
