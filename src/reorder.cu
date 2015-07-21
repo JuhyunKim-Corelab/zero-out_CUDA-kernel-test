@@ -169,8 +169,8 @@ int main()
         assert(imgSizeX == imgSizeY);
         assert(numGroups == 1);
     }
-    dim3 blocks (GRID_DIM_X, 1, 1); // ceil(2027/32) = (2027 - 1)/32 + 1
-    dim3 threads(32, 1, 1);
+    dim3 blocks (32, GRID_DIM_X, 1); // ceil(2027/32) = (2027 - 1)/32 + 1
+    dim3 threads(4, 32, 1);
     bool checkImgBounds = numImages % (32*imgsPerThread) != 0;
     
     if (scaleTargets == 0) {
@@ -207,9 +207,9 @@ int main()
         numModulesX, imgStride, numImgColors, scaleTargets, scaleOutput, conv);
 
     clockTime = clock() - clockTime;//#########Evaluating End!!!!
-    printf ("#### Kernel Execution time: %d clicks (%f seconds) ####\n\n",clockTime,((float)clockTime)/CLOCKS_PER_SEC);
+    printf ("#### Kernel Execution time: %ld clicks (%f seconds) ####\n\n",clockTime,((float)clockTime)/CLOCKS_PER_SEC);
 
-    //targets.print(targets.getNumRows(), targets.getNumRows());
+    targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
     //targets.print(targets.getNumRows(), targets.getNumRows());
 
@@ -231,7 +231,7 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
     //__shared__ float shFilters[Y][X];
     //__shared__ float shImages[Y][X];
     const int nMaxConnPerNeuron = (filterSize*filterSize) * numImgColors;
-    const int neuronIdx = blockIdx.x*blockDim.x + threadIdx.x;
+    const int neuronIdx = blockIdx.y*blockDim.y + threadIdx.y;
     if(neuronIdx >= N_LIVING_NEURON) return; //for dead neuron of last block
     const int nNeuronPerFilter = numModulesX * numModulesY;//36
     const int neuronIdx_old = mapping[neuronIdx];
@@ -239,16 +239,13 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
 
     float privWeight[576];//privWeight[nMaxConnPerNeuron]; literal because "nMaxConnPerNeuron" should be known in compile time
     float privAct[576];//equal to Weights
-    float prod[128];
+    float prod = 0.0;//prod[128];
     for (int i = 0; i < 576; ++i){ //is this really necessary???
         privAct[i] = 0.0;
     }
-    for (int i = 0; i < numImages; ++i){
-        prod[i] =0.0;
-    }
 
     __shared__ unsigned nLoads;
-    nLoads = nLoadForBlocks[ blockIdx.x ]; //what happen if all thread in a block load same memory location?
+    nLoads = nLoadForBlocks[ blockIdx.y ]; //what happen if all thread in a block load same memory location?
 
     /*
      * (weight load) initialization Phase
@@ -279,50 +276,40 @@ __global__ void reorderedFilters(float* images, float* filters, float* targets,
         padding4 += (int)((imgSizeX - 1) - center/imgSizeX == i);
     }
     const int upperLeft = center - ((filterSize)/2) - imgSizeX*((filterSize)/2);
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //~~~~~~~~~~~~~~~iterate for 128 img~~~~~~~~~~~~~~~~~~~~~~
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    for(int img_idx = 0; img_idx <numImages; img_idx++){
-    	for (int i = 0; i < nLoads; ++i){ //loadSeqs_thisNeuron[i]: this will iterate actually.
-    		int actLoadIdx = loadSeqs_thisNeuron[i];
-    		if(actLoadIdx == -1) break;
-    		int c = actLoadIdx/(filterSize*filterSize); //color
-    		int y = (actLoadIdx%(filterSize*filterSize))/filterSize; // y idx in 3x3 filter
-    		int x = (actLoadIdx%(filterSize*filterSize))%filterSize; // x idx in 3x3 filter
-    		if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
-    			if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
-	    			privAct[c*(filterSize*filterSize) + (y*filterSize + x)] =
-	    				images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + img_idx];
-	    				// [()*numImages + "n-th image"] // n:[0-127]
-    			}
-    			else{
-    				privAct[c*(filterSize*filterSize) + (y*filterSize + x)] = 0.0;	
-    			}
-    		}
-    		else{
-    			privAct[c*(filterSize*filterSize) + (y*filterSize + x)] = 0.0;
-    		}
-    	}
+    const int img_idx = blockIdx.x*blockDim.x + threadIdx.x;
+	for (int i = 0; i < nLoads; ++i){ //loadSeqs_thisNeuron[i]: this will iterate actually.
+		int actLoadIdx = loadSeqs_thisNeuron[i];
+		if(actLoadIdx == -1) break;
+		int c = actLoadIdx/(filterSize*filterSize); //color
+		int y = (actLoadIdx%(filterSize*filterSize))/filterSize; // y idx in 3x3 filter
+		int x = (actLoadIdx%(filterSize*filterSize))%filterSize; // x idx in 3x3 filter
+		if(y >= padding1 && (filterSize - 1) - y >= padding4 ){
+			if(x >= padding2 && (filterSize - 1) - x >= padding3 ){
+    			privAct[c*(filterSize*filterSize) + (y*filterSize + x)] =
+    				images[(c*(nNeuronPerFilter) + upperLeft + y*imgSizeX + x)*numImages + img_idx];
+    				// [()*numImages + "n-th image"] // n:[0-127]
+			}
+			else{
+				privAct[c*(filterSize*filterSize) + (y*filterSize + x)] = 0.0;	
+			}
+		}
+		else{
+			privAct[c*(filterSize*filterSize) + (y*filterSize + x)] = 0.0;
+		}
+	}
 
-        /*
-        * Computation Phase
-        */
-        for (int i = 0; i <nMaxConnPerNeuron; ++i){
-         prod[img_idx] += privAct[i] * privWeight[i];
-        }  
-    }
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /*
+    * Computation Phase
+    */
+    for (int i = 0; i <nMaxConnPerNeuron; ++i){
+     prod += privAct[i] * privWeight[i];
+    }  
+    
 
     /*
     * Store Phase
     */
-    for (int i = 0; i < numImages; ++i){
-        //if(isnan(prod[i]) prod[i] = 99.99;
-        targets[(neuronIdx_old)*numImages + i] = prod[i];//((float)((long)loadSeqs));//(float)(*loadSeqs_thisNeuron);
-        //targets[(neuronIdx_old)*numImages + i] = prod[i]; //target[()*numImages + "n-th image"]
-    }
+    targets[(neuronIdx_old)*numImages + img_idx] = prod;
     
 }
 
