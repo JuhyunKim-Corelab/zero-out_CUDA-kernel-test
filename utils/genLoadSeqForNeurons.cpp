@@ -6,6 +6,7 @@
 #include <algorithm>    // std::stable_sort
 #include <vector>       // std::vector
 #include <string>
+#include <string.h>
 #define MAX_BUF 65536
 #define BLOCKSIZE 32
 
@@ -13,11 +14,11 @@
 //and generate load sequences for each neurons.
 
 //g++ genLoadSeqForNeurons.cpp -o genLoadSeqForNeurons.exe
-// usage: ./genLoadSeqForNeurons.exe [nMaxConnPerNeuron] [nNeuronPerFilter] [nFilter]
+// usage: ./genLoadSeqForNeurons.exe [nMaxConnPerNeuron] [nNeuronPerFilter] [nFilter] [input file]
 // e.g. : ./genLoadSeqForNeurons.exe 576 36 64
 
 int main(int argc, char** argv){
-    assert(argc == 4 && "3 arguments should be provided !!\n");
+    assert(argc == 5 && "4 arguments should be provided !!\n");
     unsigned nMaxConnPerNeuron = atoi(argv[1]);//576
     unsigned nNeuronPerFilter = atoi(argv[2]);//36
     unsigned nFilter = atoi(argv[3]);//64
@@ -29,6 +30,15 @@ int main(int argc, char** argv){
     FILE *fp_loadSeq;
     char filename_WmatReordered[40] = "zero-out_filter.reordered.data";
     char filename_loadSeq[40] = "loadSeqForNeuron.data";
+    if(argc == 5){
+        char tmpstr[80] = "loadSeqForNeuron.data";
+        char tmpstr2[80];
+        int len= (int)strlen(argv[4]);
+        strncpy(tmpstr2, argv[4], len-14);
+        strcat(tmpstr2, tmpstr); strcpy(filename_loadSeq, tmpstr2);
+        strcpy(filename_loadSeq, tmpstr2);
+        strcpy(filename_WmatReordered, argv[4]);
+    }
 
     if((fp_WmatReordered = fopen(filename_WmatReordered, "r+")) == NULL) {
         printf("file open Error(WmatReordered)\n");
@@ -39,9 +49,10 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    int ret;
+    int ret, ret_2;
     float tmp;
-    for (long i = 0; i < nWeightVal; ++i){
+    long i;
+    for (i = 0; i < nWeightVal; ++i){
         ret = fscanf(fp_WmatReordered, "%f ", &tmp);
         if(ret == 1){
             wm[i] = tmp;
@@ -57,8 +68,8 @@ int main(int argc, char** argv){
             exit(0);
         }
     }
-    if(fscanf(fp_WmatReordered, "%f ", &tmp) != EOF){
-        printf("Error 2 EOF\n");
+    if((ret_2 = fscanf(fp_WmatReordered, "%f ", &tmp)) != EOF){
+        printf("Error 2 EOF i:%ld, tmp:%f, ret:%d\n", i, tmp, ret_2);
         exit(0);
     }
 
