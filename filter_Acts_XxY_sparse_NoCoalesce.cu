@@ -323,7 +323,7 @@ int main()
         numModulesX, imgStride, numImgColors, numGroups, scaleTargets, scaleOutput, conv);
     
     clockTime = clock() - clockTime;//#########Evaluating End!!!!
-    printf ("#### Kernel Execution time: %d clicks (%f seconds) ####\n\n",clockTime,((float)clockTime)/CLOCKS_PER_SEC);
+    printf ("#### Kernel Execution time: %ld clicks (%f seconds) ####\n\n",clockTime,((float)clockTime)/CLOCKS_PER_SEC);
 
     targets.print(targets.getNumRows(), targets.getNumRows());
     //filters.print(filters.getNumRows(), filters.getNumRows());
